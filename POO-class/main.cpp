@@ -29,12 +29,16 @@ void Main::shutDown()
 
 void Main::openMainW()
 {
+    if(!this->getStateMW()){
 
+    }
 }
 
 void Main::closeMainW()
 {
+    if(this->getStateMW()){
 
+    }
 }
 
 std::unique_ptr<CodesCompressor> Main::getCodesCompressor()
