@@ -22,6 +22,11 @@ along with Minifier.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "codesCompressor.hpp"
 
+/** 
+ * @brief  Constructor of CodesCompressor class
+ * @param  folders: vector of string indiquate folder where search for file to compress
+ * @retval None
+ */
 CodesCompressor::CodesCompressor(std::vector<std::string> folders)
 {
     this->folder.push_back(folders[0]);
@@ -40,11 +45,19 @@ CodesCompressor::~CodesCompressor()
 {
 }
 
+/** 
+ * @brief  function use to load files in folder selected by user
+ * @retval None
+ */
 void CodesCompressor::loadFiles()
 {
 
 }
 
+/** 
+ * @brief  function use to launch compressor on files
+ * @retval None
+ */
 void CodesCompressor::compress()
 {
     for(int i = 0; i < this->count; i++){
@@ -52,6 +65,10 @@ void CodesCompressor::compress()
     }
 }
 
+/** 
+ * @brief  function use to stop compressor on files
+ * @retval None
+ */
 void CodesCompressor::stop()
 {
     for(int i = 0; i < this->count; i++){
@@ -59,25 +76,38 @@ void CodesCompressor::stop()
     }
 }
 
+/** 
+ * @brief  function use to load profils from profils'file
+ * @retval None
+ */
 void CodesCompressor::loadProfils()
 {
-
+    std::string line;
+	while (std::getline(std::cin, line))
+	{
+		this->profils.push_back(line);
+	}
 }
 
-
-/*******************************************/
-/************* Accesseur *******************/
-/*******************************************/
-
+/** 
+ * @brief  function use to translate a profil
+ * @param  filePath: string to translate
+ * @retval None
+ */
 void CodesCompressor::getProfil( std::string filePath)
 {
-
+    auto c = explode(filePath, '+');
+    this->profil = new Profil( c[0] , c[1] );
 }
 
 void CodesCompressor::saveProfil()
 {
     this->profil->save();
 }
+
+/*******************************************/
+/************* Accesseur *******************/
+/*******************************************/
 
 inline int CodesCompressor::getFilesCount()
 {

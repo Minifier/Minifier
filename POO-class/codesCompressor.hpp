@@ -25,9 +25,13 @@ along with Minifier.  If not, see <http://www.gnu.org/licenses/>.
 
 #include <string>
 #include <vector>
+#include <iostream>
+#include <limits>
+#include <sstream>
 
 #include "profil.hpp"
 #include "compressFile.hpp"
+#include "utils.hpp"
 
 namespace code_compressor {
 
