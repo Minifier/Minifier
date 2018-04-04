@@ -15,5 +15,5 @@ CompressFile::~CompressFile()
 
 void CompressFile::compress()
 {
-
+    throw "Not implemented";
 }
