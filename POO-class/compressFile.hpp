@@ -8,7 +8,7 @@ namespace code_compressor {
 class CompressFile
 {
 public:
-    CompressFile( string filePath );
+    CompressFile( std::string filePath );
     CompressFile(CompressFile &&) = default;
     CompressFile(const CompressFile &) = default;
     CompressFile &operator=(CompressFile &&) = default;
@@ -19,7 +19,7 @@ public:
 
 private:
     bool _change, _exist;
-    string _filePath , _outputFile, _type;
+    std::string _filePath , _outputFile, _type;
 };
 
 } //end code_compressor

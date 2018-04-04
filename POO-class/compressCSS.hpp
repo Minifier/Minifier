@@ -9,7 +9,7 @@ namespace code_compressor {
 class CompressCSS : public CompressFile
 {
 public:
-    CompressCSS(string filePath);
+    CompressCSS(std::string filePath);
     CompressCSS(CompressCSS &&) = default;
     CompressCSS(const CompressCSS &) = default;
     CompressCSS &operator=(CompressCSS &&) = default;

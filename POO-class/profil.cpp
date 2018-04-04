@@ -1,6 +1,6 @@
 #include "profil.hpp"
 
-Profil::Profil( string folderCSS , string folderJS )
+Profil::Profil( std::string folderCSS , std::string folderJS )
 {
     this->jsFolder = folderJS;
     this->cssFolder = folderCSS;
@@ -15,25 +15,25 @@ void Profil::save()
 
 }
 
-string Profil::FileName()
+std::string Profil::FileName()
 {
 }
 
-string Profil::getJsFolder()
+std::string Profil::getJsFolder()
 {
     return this->jsFolder;
 }
-string Profil::getCssFolder()
+std::string Profil::getCssFolder()
 {
     return this->cssFolder;
 }
 
-void Profil::setJsFolder( string jsFolder)
+void Profil::setJsFolder( std::string jsFolder)
 {
     this->jsFolder = jsFolder;
 }
 
-void Profil::setCssFolder( string cssFolder)
+void Profil::setCssFolder( std::string cssFolder)
 {
     this->cssFolder = cssFolder;
 }

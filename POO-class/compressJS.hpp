@@ -9,7 +9,7 @@ namespace code_compressor {
 class CompressJS : public CompressFile
 {
 public:
-    CompressJS( string filePath );
+    CompressJS( std::string filePath );
     CompressJS(CompressJS &&) = default;
     CompressJS(const CompressJS &) = default;
     CompressJS &operator=(CompressJS &&) = default;
@@ -21,14 +21,6 @@ public:
 private:
     
 };
-
-CompressJS::CompressJS(string filePath) : CompressFile{filePath}
-{
-}
-
-CompressJS::~CompressJS()
-{
-}
 
 } //end code_compressor
 

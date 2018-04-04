@@ -1,12 +1,45 @@
 #include "codesCompressor.hpp"
 
-
-CodesCompresor::CodesCompresor(std::vector<std::string> folders)
+CodesCompressor::CodesCompressor(std::vector<std::string> folders)
 {
 }
 
-CodesCompresor::~CodesCompresor()
+CodesCompressor::~CodesCompressor()
 {
+}
+
+void CodesCompressor::loadFiles()
+{
+
+}
+
+void CodesCompressor::compress()
+{
+    for(int i = 0; i < this->count; i++){
+        this->folder[i]->compress();
+    }
+}
+
+void CodesCompressor::stop()
+{
+    for(int i = 0; i < this->count; i++){
+        this->folder[i]->stop();
+    }
+}
+
+void CodesCompressor::loadProfils()
+{
+
+}
+
+void CodesCompressor::getProfil( std::string filePath)
+{
+
+}
+
+void CodesCompressor::saveProfil()
+{
+    this->profil->save();
 }
 
 int CodesCompressor::getFilesCount()

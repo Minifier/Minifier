@@ -1,6 +1,6 @@
 #include "compressCSS.hpp"
 
-CompressCSS::CompressCSS(string filePath) : CompressFile{filePath}
+CompressCSS::CompressCSS(std::string filePath) : CompressFile{filePath}
 {
 }
 

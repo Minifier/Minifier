@@ -1,6 +1,6 @@
 #include "compressFile.hpp"
 
-CompressFile::CompressFile( string filePath)
+CompressFile::CompressFile( std::string filePath)
 {
     this->exist = false;
     this->change = false;

@@ -26,7 +26,7 @@ public:
 
     // Gestion des profils
     void loadProfils();
-    void getProfil();
+    void getProfil( std::string filePath);
     void saveProfil();
 
     int getFilesCount();

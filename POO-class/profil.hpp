@@ -8,7 +8,7 @@ namespace code_compressor {
 class Profil
 {
 public:
-    Profil( string folderCSS , string folderJS );
+    Profil( std::string folderCSS , std::string folderJS );
     Profil(Profil &&) = default;
     Profil(const Profil &) = default;
     Profil &operator=(Profil &&) = default;
@@ -16,16 +16,16 @@ public:
     ~Profil();
 
     void save();
-    string FileName();
+    std::string FileName();
 
-    string getJsFolder();
-    string getCssFolder();
+    std::string getJsFolder();
+    std::string getCssFolder();
 
-    void setJsFolder( string jsFolder);
-    void setCssFolder( string cssFolder);
+    void setJsFolder( std::string jsFolder);
+    void setCssFolder( std::string cssFolder);
 
 private:
-    string jsFolder, cssFolder;
+    std::string jsFolder, cssFolder;
 };
 
 } //end code_compressor

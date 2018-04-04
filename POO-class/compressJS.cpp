@@ -1,6 +1,6 @@
 #include "compressJS.hpp"
 
-CompressJS::CompressJS(string filePath) : CompressFile{filePath}
+CompressJS::CompressJS(std::string filePath) : CompressFile{filePath}
 {
 }
 
