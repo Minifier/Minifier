@@ -1,3 +1,25 @@
+/*******************************************************************
+Copyright (C) 2018 Oscar MARIE--TAILLEFER   <o5mariet@enib.fr>
+Copyright (C) 2018 Nils JEGOU-GERGAUD       <n5jegoug@enib.fr>
+Copyright (C) 2018 Nicols FRANCIS           <n4franci@enib.fr>
+Copyright (C) 2018 Corentin LAMBERT         <c4lamber@enib.fr>
+
+This file is part of Minifier.
+
+Minifier is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+Minifier is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with Minifier.  If not, see <http://www.gnu.org/licenses/>.
+*******************************************************************/
+
 #include "profil.hpp"
 
 Profil::Profil( std::string folderCSS , std::string folderJS )
@@ -10,18 +32,29 @@ Profil::~Profil()
 {
 }
 
+/** 
+ * @brief  function use to add profil into profil.txt
+ * @retval None
+ */
 void Profil::save()
 {
     // Fonction pour écrire dans un fichier la config et la sauvegarder
     // Traitement à déterminer
 }
 
+/** 
+ * @brief  function use to convert jsFolder and cssFolder into profil
+ * @retval encode string "jsFolder+cssFolder"
+ */
 std::string Profil::fileName()
 {
-    return "/" + PROFIL_PATH + "/" + this->jsFolder + "+" + this->cssFolder + "." + EXTENSION_CONFIG;
+    return this->jsFolder + "+" + this->cssFolder;
 }
 
-// Accesseur
+
+/*******************************************/
+/************* Accesseur *******************/
+/*******************************************/
 
 std::string Profil::getJsFolder()
 {
@@ -32,7 +65,10 @@ std::string Profil::getCssFolder()
     return this->cssFolder;
 }
 
-// Mutateur
+
+/*******************************************/
+/************* Mutateur ********************/
+/*******************************************/
 
 void Profil::setJsFolder( std::string jsFolder)
 {
