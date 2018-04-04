@@ -2,6 +2,16 @@
 
 CodesCompressor::CodesCompressor(std::vector<std::string> folders)
 {
+    this->folder.push_back(folders[0]);
+    this->folder.push_back(folders[1]);
+
+    this->index = 0;
+    this->filesCount = 0;
+    this->filesProcessed = 0;
+
+    this->loadFiles();
+
+    this->compress();
 }
 
 CodesCompressor::~CodesCompressor()
@@ -42,72 +52,72 @@ void CodesCompressor::saveProfil()
     this->profil->save();
 }
 
-int CodesCompressor::getFilesCount()
+inline int CodesCompressor::getFilesCount()
 {
     return this->filesCount;
 }
 
-int CodesCompressor::getFilesProcessed()
+inline int CodesCompressor::getFilesProcessed()
 {
     return this->filesProcessed;
 }
 
-int CodesCompressor::getIndex()
+inline int CodesCompressor::getIndex()
 {
     return this->index;
 }
 
-string CodesCompressor::getCurrentFile()
+inline std::string CodesCompressor::getCurrentFile()
 {
     return this->currentFile;
 }
 
-std::vector<String> CodesCompressor::getFolder()
+inline std::vector<std::string> CodesCompressor::getFolder()
 {
     return this->folder;
 }
 
-string getJsFolder()
+inline std::string getJsFolder()
 {
     return this->folder[0];
 }
-string getCssFolder()
+inline std::string getCssFolder()
 {
     return this->folder[1];
 }
 
-void CodesCompressor::setFilesCount(int count)
+inline void CodesCompressor::setFilesCount(int count)
 {
     this->filesCount = count;
 }
 
-void CodesCompressor::setFilesProcessed(int processed)
+inline void CodesCompressor::setFilesProcessed(int processed)
 {
     this->filesProcessed = processed;
 }
 
-void CodesCompressor::setIndex( int index)
+inline void CodesCompressor::setIndex( int index)
 {
     this->index = index;
 }
 
-void CodesCompressor::setCurrentFile( string cf)
+inline void CodesCompressor::setCurrentFile( std::string cf)
 {
     this->currentFile = cf;
 }
 
-void CodesCompressor::setFolder(string jsFolder, string cssFolder)
+inline void CodesCompressor::setFolder(std::string jsFolder, std::string cssFolder)
 {
     this->folder[0] = jsFolder;
     this->folder[1] = cssFolder;
 }
 
-void CodesCompressor::setJsFolder(string jsFolder)
+inline void CodesCompressor::setJsFolder(std::string jsFolder)
 {
     this->folder[0] = jsFolder;
 }
 
-void CodesCompressor::setCssFolder(strign cssFolder)
+inline void CodesCompressor::setCssFolder(std::string cssFolder)
 {
     this->folder[1] = cssFolder;
 }
