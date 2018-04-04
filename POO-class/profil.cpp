@@ -12,12 +12,16 @@ Profil::~Profil()
 
 void Profil::save()
 {
-
+    // Fonction pour écrire dans un fichier la config et la sauvegarder
+    // Traitement à déterminer
 }
 
-std::string Profil::FileName()
+std::string Profil::fileName()
 {
+    return "/" + PROFIL_PATH + "/" + this->jsFolder + "+" + this->cssFolder + "." + EXTENSION_CONFIG;
 }
+
+// Accesseur
 
 std::string Profil::getJsFolder()
 {
@@ -27,6 +31,8 @@ std::string Profil::getCssFolder()
 {
     return this->cssFolder;
 }
+
+// Mutateur
 
 void Profil::setJsFolder( std::string jsFolder)
 {

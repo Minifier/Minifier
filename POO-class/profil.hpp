@@ -4,6 +4,9 @@
 namespace code_compressor {
 
 #include <string>
+#include <iostream>
+
+#include "config.hpp"
 
 class Profil
 {
@@ -15,12 +18,17 @@ public:
     Profil &operator=(const Profil &) = default;
     ~Profil();
 
+    // Sauvegarder le fichier de configuration
     void save();
-    std::string FileName();
 
+    // Obtenir le chemin vers le fichier de configuration
+    std::string fileName();
+
+    // Accesseur
     std::string getJsFolder();
     std::string getCssFolder();
 
+    // Mutateur
     void setJsFolder( std::string jsFolder);
     void setCssFolder( std::string cssFolder);
 
