@@ -17,6 +17,16 @@ public:
 
     virtual void compress();
 
+    inline bool getChange();
+    inline bool getExist();
+    inline std::string getFilePath();
+    inline std::string getOutputFile();
+    inline std::string getType();
+
+    inline void setChange(bool change);
+    inline void setExist(bool exist);
+    inline void setFilePath(std::string filePath);
+
 private:
     bool _change, _exist;
     std::string _filePath , _outputFile, _type;
