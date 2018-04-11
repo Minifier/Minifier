@@ -38,8 +38,7 @@ Profil::~Profil()
  */
 void Profil::save()
 {
-    // Fonction pour écrire dans un fichier la config et la sauvegarder
-    // Traitement à déterminer
+    return writeEndFile( PROFIL_PATH , this->fileName());
 }
 
 /** 

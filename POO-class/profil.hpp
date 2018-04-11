@@ -29,6 +29,7 @@ namespace code_compressor {
 #include <iostream>
 
 #include "config.hpp"
+#include "utils.hpp"
 
 class Profil
 {
