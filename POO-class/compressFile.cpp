@@ -52,23 +52,23 @@ inline void CompressFile::compress()
 
 inline bool CompressFile::getChange()
 {
-
+    return this->_change;
 }
 inline bool CompressFile::getExist()
 {
-
+    return this->_exist;
 }
 inline std::string CompressFile::getFilePath()
 {
-
+    return this->_filePath;
 }
 inline std::string CompressFile::getOutputFile()
 {
-
+    return this->_outputFile;
 }
 inline std::string CompressFile::getType()
 {
-
+    return this->_type;
 }
 
 
@@ -86,7 +86,5 @@ inline void CompressFile::setExist(bool exist)
 }
 inline void CompressFile::setFilePath(std::string filePath)
 {
-    this->_filePath = filePath;
-    //TODO Mettre en place l'output filepath en meme temps
-    
+    this->_filePath = filePath;    
 }

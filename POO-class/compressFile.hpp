@@ -24,6 +24,7 @@ along with Minifier.  If not, see <http://www.gnu.org/licenses/>.
 #define compress_file_hpp 1
 
 #include <string>
+#include "utils.hpp"
 
 namespace code_compressor {
 
