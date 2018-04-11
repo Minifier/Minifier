@@ -51,7 +51,9 @@ CodesCompressor::~CodesCompressor()
  */
 void CodesCompressor::loadFiles()
 {
-
+    /*
+    Parcourir les dossiers indiqué par l'utilisateur et les stockers dans le vecteur files
+    */
 }
 
 /** 
@@ -61,7 +63,7 @@ void CodesCompressor::loadFiles()
 void CodesCompressor::compress()
 {
     for(int i = 0; i < this->count; i++){
-        this->folder[i]->compress();
+        this->files[i]->compress();
     }
 }
 
@@ -72,7 +74,7 @@ void CodesCompressor::compress()
 void CodesCompressor::stop()
 {
     for(int i = 0; i < this->count; i++){
-        this->folder[i]->stop();
+        this->files[i]->stop();
     }
 }
 
