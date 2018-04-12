@@ -28,6 +28,7 @@ CompressJS::CompressJS(std::string filePath) : CompressFile{filePath}
 
 CompressJS::~CompressJS()
 {
+    this->stop();
 }
 
 /** 
@@ -35,6 +36,15 @@ CompressJS::~CompressJS()
  * @retval None
  */
 void CompressJS::compress()
+{
+    
+}
+
+/** 
+ * @brief  function use to stop compressor
+ * @retval None
+ */
+void CompressJS::stop()
 {
     
 }
