@@ -24,6 +24,17 @@ along with Minifier.  If not, see <http://www.gnu.org/licenses/>.
 
 CompressJS::CompressJS(std::string filePath) : CompressFile{filePath}
 {
+    this->type = "js";
+    auto c = explode(filePath, '.');
+    if(c.size() == 2){
+        this->outputFile = "" + c[0] + ".min.js";
+    }else{
+        std::string path = "";
+        for( int i = 0; i < c.size()-1 ; i++){
+            path += c[i].c_str();
+        }
+        this->outputFile = "" + path + ".min.js";
+    }
 }
 
 CompressJS::~CompressJS()
