@@ -39,6 +39,7 @@ public:
     ~CompressJS();
 
     void compress() override;
+    void stop() override;
 
 private:
     

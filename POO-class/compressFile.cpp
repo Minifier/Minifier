@@ -33,6 +33,7 @@ CompressFile::CompressFile( std::string filePath)
 
 CompressFile::~CompressFile()
 {
+    this->stop();
 }
 
 /** 
@@ -45,6 +46,16 @@ inline void CompressFile::compress()
     throw "Not implemented";
 }
 
+
+/** 
+ * @brief  void function
+ * @note   
+ * @retval None
+ */
+inline void CompressFile::stop()
+{
+    throw "Not implemented";
+}
 
 /*******************************************/
 /************* Acesseur ********************/

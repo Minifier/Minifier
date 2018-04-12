@@ -39,6 +39,7 @@ public:
     ~CompressCSS();
 
     void compress() override;
+    void stop() override;
 
 private:
     
