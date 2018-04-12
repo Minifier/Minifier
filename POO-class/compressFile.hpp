@@ -39,6 +39,7 @@ public:
     virtual ~CompressFile();
 
     virtual void compress();
+    virtual void stop();
 
     // Accesseur
     inline bool getChange();
