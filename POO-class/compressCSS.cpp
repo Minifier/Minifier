@@ -24,6 +24,17 @@ along with Minifier.  If not, see <http://www.gnu.org/licenses/>.
 
 CompressCSS::CompressCSS(std::string filePath) : CompressFile{filePath}
 {
+    this->type = "css";
+    auto c = explode(filePath, '.');
+    if(c.size() == 2){
+        this->outputFile = "" + c[0] + ".min.css";
+    }else{
+        std::string path = "";
+        for( int i = 0; i < c.size()-1 ; i++){
+            path += c[i].c_str();
+        }
+        this->outputFile = "" + path + ".min.css";
+    }
 }
 
 CompressCSS::~CompressCSS()
