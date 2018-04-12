@@ -28,6 +28,7 @@ CompressCSS::CompressCSS(std::string filePath) : CompressFile{filePath}
 
 CompressCSS::~CompressCSS()
 {
+    this->stop();
 }
 
 /** 
@@ -35,6 +36,15 @@ CompressCSS::~CompressCSS()
  * @retval None
  */
 void CompressCss::compress()
+{
+    
+}
+
+/**
+ * @brief function use to stop compressor
+ * @retval None
+ */
+void CompressCss::stop()
 {
     
 }
