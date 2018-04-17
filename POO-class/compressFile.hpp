@@ -52,6 +52,8 @@ public:
     inline void setChange(bool change);
     inline void setExist(bool exist);
     inline void setFilePath(std::string filePath);
+    inline void setOutputFile(std::string output);
+    inline void setType(std::string type);
 
 private:
     bool _change, _exist;
