@@ -22,7 +22,7 @@ along with Minifier.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "profil.hpp"
 
-Profil::Profil( std::string folderCSS , std::string folderJS )
+Profil::Profil( std::string folderJS , std::string folderCSS )
 {
     this->jsFolder = folderJS;
     this->cssFolder = folderCSS;
