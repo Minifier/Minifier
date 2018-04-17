@@ -24,11 +24,11 @@ along with Minifier.  If not, see <http://www.gnu.org/licenses/>.
 
 CompressFile::CompressFile( std::string filePath)
 {
-    this->exist = false;
-    this->change = false;
-    this->type = "none";
-    this->filePath = filePath;
-    this->outputFile = "" ; // Faire le bon traitement ici
+    this->setExist(false);
+    this->setChange(false);
+    this->setType("none");
+    this->setFilePath(filePath);
+    this->setOutputFile("");
 }
 
 CompressFile::~CompressFile()
@@ -82,7 +82,6 @@ inline std::string CompressFile::getType()
     return this->_type;
 }
 
-
 /*******************************************/
 /************* Mutateur ********************/
 /*******************************************/
@@ -98,4 +97,14 @@ inline void CompressFile::setExist(bool exist)
 inline void CompressFile::setFilePath(std::string filePath)
 {
     this->_filePath = filePath;    
+}
+
+inline void CompressFile::setType(std::string type)
+{
+    this->_type = type;
+}
+
+inline void CompressFile::setOutputFile( std::string output)
+{
+    this->_outputFile = output;
 }
