@@ -30,12 +30,10 @@ along with Minifier.  If not, see <http://www.gnu.org/licenses/>.
  */
 CodesCompressor::CodesCompressor(std::vector<std::string> folders)
 {
-    this->folder.push_back(folders[0]); // Dossier js
-    this->folder.push_back(folders[1]); // Dossier css
-
-    this->index = 0;
-    this->filesCount = 0;
-    this->filesProcessed = 0;
+    this->setFolder(folders[0] , folder[1]);
+    this->setIndex(0);
+    this->setFilesCount(0);
+    this->setFilesProcessed(0);
 
     this->loadFiles();
 
@@ -94,10 +92,10 @@ void CodesCompressor::loadProfils()
  * @param  filePath: string to translate
  * @retval None
  */
-void CodesCompressor::getProfil( std::string filePath)
+void CodesCompressor::setProfil( std::string filePath)
 {
     auto c = explode(filePath, '+');
-    this->profil = new Profil( c[0] , c[1] );
+    this->_profil( std::make_unique( new Profil( c[0] , c[1] ) ) );
 }
 
 void CodesCompressor::saveProfil()
@@ -111,37 +109,32 @@ void CodesCompressor::saveProfil()
 
 inline int CodesCompressor::getFilesCount()
 {
-    return this->filesCount;
+    return this->_filesCount;
 }
 
 inline int CodesCompressor::getFilesProcessed()
 {
-    return this->filesProcessed;
+    return this->_filesProcessed;
 }
 
 inline int CodesCompressor::getIndex()
 {
-    return this->index;
-}
-
-inline std::string CodesCompressor::getCurrentFile()
-{
-    return this->currentFile;
+    return this->_index;
 }
 
 inline std::vector<std::string> CodesCompressor::getFolder()
 {
-    return this->folder;
+    return this->_folder;
 }
 
-inline std::string getJsFolder()
+inline std::string CodesCompressor::getJsFolder()
 {
-    return this->folder[0];
+    return this->_folder[0];
 }
 
-inline std::string getCssFolder()
+inline std::string CodesCompressor::getCssFolder()
 {
-    return this->folder[1];
+    return this->_folder[1];
 }
 
 /*******************************************/
@@ -150,36 +143,31 @@ inline std::string getCssFolder()
 
 inline void CodesCompressor::setFilesCount(int count)
 {
-    this->filesCount = count;
+    this->_filesCount = count;
 }
 
 inline void CodesCompressor::setFilesProcessed(int processed)
 {
-    this->filesProcessed = processed;
+    this->_filesProcessed = processed;
 }
 
 inline void CodesCompressor::setIndex( int index)
 {
-    this->index = index;
-}
-
-inline void CodesCompressor::setCurrentFile( std::string cf)
-{
-    this->currentFile = cf;
+    this->_index = index;
 }
 
 inline void CodesCompressor::setFolder(std::string jsFolder, std::string cssFolder)
 {
-    this->folder[0] = jsFolder;
-    this->folder[1] = cssFolder;
+    this->_folder[0] = jsFolder;
+    this->_folder[1] = cssFolder;
 }
 
 inline void CodesCompressor::setJsFolder(std::string jsFolder)
 {
-    this->folder[0] = jsFolder;
+    this->_folder[0] = jsFolder;
 }
 
 inline void CodesCompressor::setCssFolder(std::string cssFolder)
 {
-    this->folder[1] = cssFolder;
+    this->_folder[1] = cssFolder;
 }
