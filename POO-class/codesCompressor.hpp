@@ -52,7 +52,7 @@ public:
 
     // Gestion des profils
     void loadProfils();
-    void getProfil( std::string filePath);
+    void setProfil( std::string filePath);
     void saveProfil();
 
     // Accesseur
