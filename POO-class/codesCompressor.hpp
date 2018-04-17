@@ -74,14 +74,14 @@ public:
     inline void setCssFolder(strign cssFolder);
 
 private:
-    int filesCount, filesProcessed, index;
-    std::string currentFile;
-    std::vector<std::string> folder;
+    int _filesCount, _filesProcessed, _index;
+    std::string _currentFile;
+    std::vector<std::string> _folder;
 
-    std::vector<std::unique_ptr<CompressFile>> files;
+    std::vector<std::unique_ptr<CompressFile>> _files;
     
-    std::vector< std::unique_ptr<Profil> > profils;
-    std::unique_ptr<Profil> profil;
+    std::vector< std::unique_ptr<Profil> > _profils;
+    std::unique_ptr<Profil> _profil;
 };
 
 } //end code_compressor
