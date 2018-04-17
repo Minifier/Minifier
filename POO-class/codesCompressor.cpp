@@ -25,12 +25,13 @@ along with Minifier.  If not, see <http://www.gnu.org/licenses/>.
 /** 
  * @brief  Constructor of CodesCompressor class
  * @param  folders: vector of string indiquate folder where search for file to compress
+ * @note   ex folder = { "" , "css" }
  * @retval None
  */
 CodesCompressor::CodesCompressor(std::vector<std::string> folders)
 {
-    this->folder.push_back(folders[0]);
-    this->folder.push_back(folders[1]);
+    this->folder.push_back(folders[0]); // Dossier js
+    this->folder.push_back(folders[1]); // Dossier css
 
     this->index = 0;
     this->filesCount = 0;
@@ -43,6 +44,7 @@ CodesCompressor::CodesCompressor(std::vector<std::string> folders)
 
 CodesCompressor::~CodesCompressor()
 {
+	this->stop();
 }
 
 /** 
@@ -84,11 +86,7 @@ void CodesCompressor::stop()
  */
 void CodesCompressor::loadProfils()
 {
-    std::string line;
-	while (std::getline(std::cin, line))
-	{
-		this->profils.push_back(line);
-	}
+
 }
 
 /** 
@@ -140,6 +138,7 @@ inline std::string getJsFolder()
 {
     return this->folder[0];
 }
+
 inline std::string getCssFolder()
 {
     return this->folder[1];
