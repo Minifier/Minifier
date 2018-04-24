@@ -45,7 +45,8 @@ public :
     // Load the picture
     void loadPicture();
 
-    void YCrCb();
+    void RGBToYCrCb();
+    void YCbCrToRGB();
     std::vector<int,int,int> imageToRGB();
     void Echant422();
     void Decoup8x8();

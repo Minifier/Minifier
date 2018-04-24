@@ -55,35 +55,48 @@ std::vector<int, int, int> imageToRGB()
 }
 
 //Transforme la matrice RGB en matrice YCbCr grâce à une matrice de coefficients à appliquer sur chaque triplet d'un pixel . 
-void ImageCompressor::YCrCb()
+void ImageCompressor::RGBToYCrCb()
 {
 	int Y,Cb,Cr;
+	std::vector<int, int, int> YCbCr[this->width][this->height];
 		for(int i =0; i<=imageCompressor.getDimension()/3; i++){	
-			Y = 0,299*pixel[x][0] + 0,587*pixel[x][1] + 0,114*pixel[x][2];
-			Cb = 0,1687*pixel[x][0] - 0,3313*pixel[x][1] + 0,5*pixel[x][2] + 128;
-			Cr = 0,5*pixel[x][0] - 0,4187*pixel[x][1] - 0,0813*pixel[x][2] + 128;
-			
+			Y = 0,299*pixel[i][0] + 0,587*pixel[i][1] + 0,114*pixel[i][2];
+			Cb = 0,1687*pixel[i][0] - 0,3313*pixel[i][1] + 0,5*pixel[i][2] + 128;
+			Cr = 0,5*pixel[i][0] - 0,4187*pixel[i][1] - 0,0813*pixel[i][2] + 128;
+			YCbCr.emplace_back(Y,Cb,Cr);
 		}
-		fopen("YCbCr.txt");
-		fwrite("YCbCr.txt");
+}
+
+//Transforme la matrice YCbCr en matrice RGB grâce à une matrice de coefficients à appliquer sur chaque triplet d'un pixel . 
+void ImageCompressor::YCrCbToRGB()
+{
+	int R,G,B;
+	std::vector<int, int, int> RGB[this->width][this->height];
+		for(int i =0; i<=imageCompressor.getDimension()/3; i++){	
+			R = 1*YCbCr[i][0] + 1.402*YCbCr[i][2];
+			G = YCbCr[x][0] - 0,344136*YCbCr[x][1] - 0.714136*YCbCr[i][2];
+			B = YCbCr[i][0] + 1.772*YCbCr[i][1];
+			RGB.emplace_back(R,G,B);
+		}
 }
 
 //Sous échantillonage de la matrice YCbCr pour mettre à 0 les CbCr trois fois sur quatre car la chrominance est une donnée de l'image peut visible à l'oeil nue. 
 void ImageCompressor::Echant422()
 {
-
+	for (int i =0;i<YCbCr.size();i++){
+	}
 }
 
 
 //Découpage de la matrice Initiale YCbCr en bloc de 8x8 pour le sous échantillonage pour permettre de gagner en temps de calcul.
 void ImageCompressor::Decoup8x8()
 {
-	std::vector<int, int, int> sousMat[8][8];
-	for (int i=0; i<this->length_;i++){
-		for (int j=0; j<this->height_;j++){
-				
-		}
-	}
+	//std::vector<int, int, int> sousMat[8][8];
+	//for (int i=0; i<this->length_;i++){
+	//	for (int j=0; j<this->height_;j++){
+	//			
+	//	}
+	//}
 }
 
 
