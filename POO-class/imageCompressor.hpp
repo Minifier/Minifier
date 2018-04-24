@@ -25,14 +25,18 @@ along with Minifier.  If not, see <http://www.gnu.org/licenses/>.
 
 #include <string>
 
+#include "utils.cpp"
+#include <cmath>
+
 namespace imageCompress{
 	
 class ImageCompressor{
 
 public :
 	
-	ImageCompressor(std::string n, int h, int w, std::string ext, int q, int d, std::string f);
-	ImageCompressor(ImageCompressor &&) = default;
+    ImageCompressor(std::string n, int h, int w, std::string ext, int q, int d, std::string f);
+	
+    ImageCompressor(ImageCompressor &&) = default;
     ImageCompressor(const ImageCompressor &) = default;
     ImageCompressor &operator=(ImageCompressor &&) = default;
     ImageCompressor &operator=(const ImageCompressor &) = default;
@@ -42,6 +46,7 @@ public :
     void loadPicture();
 
     void YCrCb();
+    std::vector<int,int,int> imageToRGB();
     void Echant422();
     void Decoup8x8();
     void Quantify();
@@ -74,9 +79,9 @@ public :
     inline void setHeight( int h);
     inline void setWidth( int w);
     inline void setQuality( int q);
-    inline void setDim( int d);
-    inline void setName( std::string n);
-    inline void setExtension( std::string e);
+    inline void setDim();
+    //inline void setName( std::string n);
+    //inline void setExtension( std::string e);
     inline void setFile( std::string f );
     
 private:
