@@ -122,3 +122,21 @@ bool createFile( std::string filePath)
 
     return file.bad();
 }
+
+/**
+ * @brief function use to converte std::vector<std::string> into std::vector<char *>
+ * @param content : std::vector<std::string>
+ * @retval 
+ */
+std::vector<char *> sToc( std::vector<std::string> content)
+{
+    std::vector<char *> result;
+    for (size_t i = 0; i < content.len(); i++)
+    {
+        char *cstr = new char[content[i].length() + 1];
+        strcpy(cstr, content[i].c_str());
+        result.push_back(cstr);
+        delete [] cstr;
+    }
+    return result;
+}

@@ -40,7 +40,7 @@ std::vector<std::string> explode(std::string const & s, char delim);
  * @brief  function use to read a file
  * @retval vector<string>: content
  */
-std::vector<std::string>> readFile( std::string filePath );
+std::vector<std::string> readFile( std::string filePath );
 
 /** 
  * @brief  function use to write in a file
@@ -65,3 +65,9 @@ void deleteFile( std::string filePath );
  * @retval bool: success or false (true or false)
  */
 bool createFile( std::string filePath);
+
+/**
+ * @brief function use to converte std::vector<std::string> into std::vector<char *>
+ * @param content : std::vector<std::string>
+ */
+std::vector<char *> sToc( std::vector<std::string> content);
