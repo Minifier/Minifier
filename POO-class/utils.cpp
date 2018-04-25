@@ -21,13 +21,13 @@ std::vector<std::string> explode(std::string const & s, char delim)
  * @brief  function use to read a file
  * @retval vector<string>: content
  */
-std::vector<std::string>> readFile( std::string filePath )
+std::vector<std::string>> readFile( std::string filePath)
 {
     std::vector<std::string>> res;
 
     try {
         ifstream file(filePath.c_str(), ios::in);
-
+        *size = file.tellg();
         if(file)
         {
             std::string ligne;
@@ -139,4 +139,19 @@ std::vector<char *> sToc( std::vector<std::string> content)
         delete [] cstr;
     }
     return result;
+}
+
+/**
+ * @brief function use to get File size
+ * @retval -1 if the file could not be opened
+ */
+int getFileSize(const std::string &fileName)
+{
+    streampos begin,end;
+    std::ifstream file (fileName, ios::binary);
+    begin = file.tellg();
+    file.seekg (0, ios::end);
+    end = file.tellg();
+    file.close();
+    return (end-begin);
 }

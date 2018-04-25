@@ -40,7 +40,7 @@ std::vector<std::string> explode(std::string const & s, char delim);
  * @brief  function use to read a file
  * @retval vector<string>: content
  */
-std::vector<std::string> readFile( std::string filePath );
+std::vector<std::string> readFile( std::string filePath);
 
 /** 
  * @brief  function use to write in a file
@@ -71,3 +71,9 @@ bool createFile( std::string filePath);
  * @param content : std::vector<std::string>
  */
 std::vector<char *> sToc( std::vector<std::string> content);
+
+/**
+ * @brief function use to get File size
+ * @retval -1 if the file could not be opened
+ */
+int getFileSize(const std::string &fileName);
