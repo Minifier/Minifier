@@ -24,7 +24,15 @@ along with Minifier.  If not, see <http://www.gnu.org/licenses/>.
 #define compress_js_hpp 1
 
 #include <string>
+#include <stdlib>
+#include <stdio>
+#include <iostream>
+#include <fstream>
+#include <vector>
+#include <string>
+
 #include "CompressFile.hpp"
+#include "utils.hpp"
 
 namespace code_compressor {
 
@@ -41,8 +49,36 @@ public:
     void compress() override;
     void stop() override;
 
-private:
+    // Function use to print an error during compression
+    static void error();
+
+    // Function use to test if a char is alphanum
+    // An alphanum char is  a letter, digit, underscore, dollar sign, or non-ASCII character.
+    static int isAlphanum(int c);
+
+    // Function use to get the next char from stdin
+    static int get();
+
+    // Function use to look at the next char without getting it
+    static void peek();
+
+    // Function use to get the next char, excluding comments
+    static int next();
     
+    /* action
+            1   Output A. Copy B to A. Get the next B.
+            2   Copy B to A. Get the next B. (Delete A).
+            3   Get the next B. (Delete B).
+    */
+
+    // Function use to do some action.
+    static int action();
+
+private:
+    static int   A,B,X,Y,nextChar;
+    int fileSize;
+    std::vector<char *> content  ;
+    std::vector<char *> compress ;
 };
 
 } //end code_compressor
