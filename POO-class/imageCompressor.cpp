@@ -40,16 +40,17 @@ void ImageCompressor::loadPicture()
 }
 
 //Permet de traduire l'image reçu en paramètre sous la forme d'une matrice de valeurs de pixels avec trois valeurs R G et B.
-std::vector<int, int, int> imageToRGB()
+std::vector<std::vector<int, int, int>> imageToRGB()
 {
-	std::vector<int, int,int> pixel[this-width_][this->height_]; 
+	std::vector<std::vector<std::vector<int, int,int>>> pixel[this-width_][this->height_][3]; 
 	int r,g,b;
-	for (int x=0; x<(this->width_*this->height_)/3; x+=3){
-		r=file[x+0];
-		g=file[x+1];
-		b=file[x+2];
-		std::make_tuple(r,g,b) p;
-		std::vector.emplace_back(p) pixel[][];
+	for (int x=0; x<this->width_; x++){
+		for (int y=0; y<this->height_; y++){
+			r=file[x][y][0];
+			g=file[x][y][1];
+			b=file[x][y][2];
+			std::make_tuple(r,g,b) p;
+			std::vector.emplace_back(p) pixel[][];
 	}
 	return pixel;
 }
@@ -58,20 +59,22 @@ std::vector<int, int, int> imageToRGB()
 void ImageCompressor::RGBToYCrCb()
 {
 	int Y,Cb,Cr;
-	std::vector<int, int, int> YCbCr[this->width][this->height];
-		for(int i =0; i<=imageCompressor.getDimension()/3; i++){	
-			Y = 0,299*pixel[i][0] + 0,587*pixel[i][1] + 0,114*pixel[i][2];
-			Cb = 0,1687*pixel[i][0] - 0,3313*pixel[i][1] + 0,5*pixel[i][2] + 128;
-			Cr = 0,5*pixel[i][0] - 0,4187*pixel[i][1] - 0,0813*pixel[i][2] + 128;
+	std::vector<std::vector<std::vector<int, int,int>>> YCbCr[this->width][this->height][3];
+	for(int i =0; i<=this->width_; i++){
+		for(int j =0; j<=this->height_; j++){			
+			Y = 0,299*pixel[i][j][0] + 0,587*pixel[i][j][1] + 0,114*pixel[i][j][2];
+			Cb = 0,1687*pixel[i][j][0] - 0,3313*pixel[i][j][1] + 0,5*pixel[i][j][2] + 128;
+			Cr = 0,5*pixel[i][j][0] - 0,4187*pixel[i][j][1] - 0,0813*pixel[i][j][2] + 128;
 			YCbCr.emplace_back(Y,Cb,Cr);
 		}
+	}
 }
 
 //Transforme la matrice YCbCr en matrice RGB grâce à une matrice de coefficients à appliquer sur chaque triplet d'un pixel . 
 void ImageCompressor::YCrCbToRGB()
 {
 	int R,G,B;
-	std::vector<int, int, int> RGB[this->width][this->height];
+	std::vector<std::vector<std::vector<int, int,int>>> RGB[this->width][this->height];
 		for(int i =0; i<=imageCompressor.getDimension()/3; i++){	
 			R = 1*YCbCr[i][0] + 1.402*YCbCr[i][2];
 			G = YCbCr[x][0] - 0,344136*YCbCr[x][1] - 0.714136*YCbCr[i][2];
@@ -84,6 +87,7 @@ void ImageCompressor::YCrCbToRGB()
 void ImageCompressor::Echant422()
 {
 	for (int i =0;i<YCbCr.size();i++){
+		
 	}
 }
 
