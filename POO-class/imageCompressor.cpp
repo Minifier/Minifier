@@ -59,7 +59,7 @@ std::vector<std::vector<int, int, int>> imageToRGB()
 void ImageCompressor::RGBToYCrCb()
 {
 	int Y,Cb,Cr;
-	std::vector<std::vector<std::vector<int, int,int>>> YCbCr[this->width][this->height][3];
+	std::vector<std::vector<std::vector<int, int,int>>> YCbCr[this->width_][this->height_][3];
 	for(int i =0; i<=this->width_; i++){
 		for(int j =0; j<=this->height_; j++){			
 			Y = 0,299*pixel[i][j][0] + 0,587*pixel[i][j][1] + 0,114*pixel[i][j][2];
@@ -74,7 +74,7 @@ void ImageCompressor::RGBToYCrCb()
 void ImageCompressor::YCrCbToRGB()
 {
 	int R,G,B;
-	std::vector<std::vector<std::vector<int, int,int>>> RGB[this->width][this->height];
+	std::vector<std::vector<std::vector<int, int,int>>> RGB[this->width_][this->height_];
 		for(int i =0; i<=imageCompressor.getDimension()/3; i++){	
 			R = 1*YCbCr[i][0] + 1.402*YCbCr[i][2];
 			G = YCbCr[x][0] - 0,344136*YCbCr[x][1] - 0.714136*YCbCr[i][2];
@@ -86,8 +86,22 @@ void ImageCompressor::YCrCbToRGB()
 //Sous échantillonage de la matrice YCbCr pour mettre à 0 les CbCr trois fois sur quatre car la chrominance est une donnée de l'image peut visible à l'oeil nue. 
 void ImageCompressor::Echant422()
 {
-	for (int i =0;i<YCbCr.size();i++){
-		
+	for (int i =0;i<(YCbCr.getSize()/2);i++){
+		for(int j=0 ; j<(YCbCr.getSize()/2);j++){
+			if (i%2==1 && j%2==0){
+				YCbCr[i][j][1]=0;
+			}
+			else if(j%2==1 && i%2==0){
+				YCbCr[i][j][2]=0;
+			}
+			else if(j%2==1 && i%2==1){
+				YCbCr[i][j][1]=0;
+				YCbCr[i][j][2]=0;
+			}
+			else if(j%2==0 && i%2==0){
+				continue;
+			}
+		}
 	}
 }
 
@@ -101,6 +115,9 @@ void ImageCompressor::Decoup8x8()
 	//			
 	//	}
 	//}
+	std::vector<std::vector<std::vector<int>>> decoup[][8][8]
+	if(this->width_%8==0 && this->height_%8==0){
+		decoup.emplace_back(
 }
 
 
@@ -109,7 +126,7 @@ void ImageCompressor::Quantify()
 	float Quantify[_N][_N];
 	for (int i=0; i<_N; i++){
 		for (int j=0; j<_N; j++){
-			Quantify[i][j]=1+(i+j+1)*this->quality_;
+			Quantify[i][j]=1+(i+j+1)*(this->quality_);
 		}
 	}
 }
