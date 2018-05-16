@@ -82,7 +82,7 @@ QWidget{
 }</string>
     </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>0</number>
     </property>
     <property name="documentMode">
      <bool>true</bool>
@@ -187,8 +187,8 @@ background-color: rgb(203, 203, 203);
       <property name="geometry">
        <rect>
         <x>30</x>
-        <y>150</y>
-        <width>81</width>
+        <y>180</y>
+        <width>91</width>
         <height>21</height>
        </rect>
       </property>
@@ -241,63 +241,11 @@ background-color: rgb(203, 203, 203);
        <string>   CSS</string>
       </property>
      </widget>
-     <widget class="QTextBrowser" name="jsBrowser">
-      <property name="geometry">
-       <rect>
-        <x>130</x>
-        <y>90</y>
-        <width>171</width>
-        <height>31</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">QTextEdit{
-background-color:#fff;
-border:0 solid #0b94d1;
-border-bottom: 2px solid #0b94d1;
-}</string>
-      </property>
-      <property name="verticalScrollBarPolicy">
-       <enum>Qt::ScrollBarAlwaysOff</enum>
-      </property>
-      <property name="horizontalScrollBarPolicy">
-       <enum>Qt::ScrollBarAlwaysOff</enum>
-      </property>
-      <property name="placeholderText">
-       <string>path_to_js</string>
-      </property>
-     </widget>
-     <widget class="QTextBrowser" name="cssBrowser">
-      <property name="geometry">
-       <rect>
-        <x>130</x>
-        <y>150</y>
-        <width>171</width>
-        <height>31</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">QTextEdit{
-background-color:#fff;
-border:0 solid #0b94d1;
-border-bottom: 2px solid #0b94d1;
-}</string>
-      </property>
-      <property name="verticalScrollBarPolicy">
-       <enum>Qt::ScrollBarAlwaysOff</enum>
-      </property>
-      <property name="horizontalScrollBarPolicy">
-       <enum>Qt::ScrollBarAlwaysOff</enum>
-      </property>
-      <property name="placeholderText">
-       <string>path_to_css</string>
-      </property>
-     </widget>
      <widget class="QPushButton" name="launchCode">
       <property name="geometry">
        <rect>
         <x>150</x>
-        <y>240</y>
+        <y>260</y>
         <width>151</width>
         <height>41</height>
        </rect>
@@ -322,6 +270,68 @@ color: white;
       </property>
       <property name="text">
        <string>Compresser</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="js_browser">
+      <property name="geometry">
+       <rect>
+        <x>130</x>
+        <y>80</y>
+        <width>171</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color:#fff;
+border:0 solid #0b94d1;
+border-bottom: 2px solid #0b94d1;</string>
+      </property>
+      <property name="text">
+       <string>Choisir le chemin JS</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="css_browser">
+      <property name="geometry">
+       <rect>
+        <x>130</x>
+        <y>170</y>
+        <width>171</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color:#fff;
+border:0 solid #0b94d1;
+border-bottom: 2px solid #0b94d1;</string>
+      </property>
+      <property name="text">
+       <string>Choisir le chemin CSS</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="jsPath">
+      <property name="geometry">
+       <rect>
+        <x>30</x>
+        <y>130</y>
+        <width>271</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+     <widget class="QLabel" name="cssPath">
+      <property name="geometry">
+       <rect>
+        <x>30</x>
+        <y>230</y>
+        <width>271</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
       </property>
      </widget>
     </widget>
@@ -629,16 +639,27 @@ border-bottom: 2px solid #0b94d1;
     <addaction name="load_config"/>
     <addaction name="manage_config"/>
    </widget>
+   <widget class="QMenu" name="menuCompresseur">
+    <property name="title">
+     <string>Compresseur</string>
+    </property>
+    <addaction name="actionRun"/>
+    <addaction name="actionStop"/>
+   </widget>
    <addaction name="menuConfig"/>
+   <addaction name="menuCompresseur"/>
   </widget>
   <action name="create_config">
    <property name="text">
     <string>Ajouter une sauvegarde</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+S</string>
+   </property>
   </action>
   <action name="load_config">
    <property name="enabled">
-    <bool>false</bool>
+    <bool>true</bool>
    </property>
    <property name="text">
     <string>Charger une sauvegarde</string>
@@ -650,6 +671,28 @@ border-bottom: 2px solid #0b94d1;
    </property>
    <property name="text">
     <string>Gérer les sauvegarde</string>
+   </property>
+  </action>
+  <action name="actionRun">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Run</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+R</string>
+   </property>
+  </action>
+  <action name="actionStop">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Stop</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+T</string>
    </property>
   </action>
  </widget>

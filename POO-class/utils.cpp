@@ -101,6 +101,30 @@ bool writeEndFile( std::string filePath , std::vector<std::string>> content )
     return true;
 }
 
+bool writeCompressFile(std::string filePath , char * content )
+{
+    try {
+        ofstream file(filePath.c_str(), ios::app );
+
+        if(file)
+        {
+            while( *content != '\n' )
+            {
+                file << *content;
+                content++;
+            }
+            file << std::endl;
+
+            file.close();
+        }
+
+    } catch(const std::exception& e) {
+        throw;
+        return false;
+    }
+    return true;
+}
+
 /** 
  * @brief  function use to delete a file
  * @retval None

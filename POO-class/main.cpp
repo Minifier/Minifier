@@ -24,7 +24,7 @@ along with Minifier.  If not, see <http://www.gnu.org/licenses/>.
 
 Main::Main()
 {
-    this->sate_main_window = false;
+    this.sate_main_window = false;
 }
 
 Main::~Main()
@@ -55,7 +55,7 @@ void Main::shutDown()
  */
 void Main::openMainW()
 {
-    if(!this->getStateMW()){
+    if(!this.getStateMW()){
 
     }
 }
@@ -66,7 +66,7 @@ void Main::openMainW()
  */
 void Main::closeMainW()
 {
-    if(this->getStateMW()){
+    if(this.getStateMW()){
 
     }
 }
@@ -76,17 +76,17 @@ void Main::closeMainW()
 /*******************************************/
 
 bool Main::getStateMW(){
-    return state_main_window;
+    return this.state_main_window;
 }
 
 std::unique_ptr<CodesCompressor> Main::getCodesCompressor()
 {
-    return this->code;
+    return this.code;
 }
 
 std::unique_ptr<ImageCompressor> Main::getImageCompressor()
 {
-    return this->image;
+    return this.image;
 }
 
 /*******************************************/
@@ -94,5 +94,5 @@ std::unique_ptr<ImageCompressor> Main::getImageCompressor()
 /*******************************************/
 
 void Main::setStateMW(bool state){
-    state_main_window = state;
+    this->state_main_window = state;
 };

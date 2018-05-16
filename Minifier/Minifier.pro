@@ -25,13 +25,32 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
         main.cpp \
-        mainwindow.cpp
+        mainwindow.cpp \
+    codescompressor.cpp \
+    compressjs.cpp \
+    compresscss.cpp \
+    compressfile.cpp \
+    profil.cpp \
+    utils.cpp \
+    loadprofil.cpp \
+    manageprofil.cpp
 
 HEADERS += \
-        mainwindow.h
+        mainwindow.h \
+    codescompressor.h \
+    compressjs.h \
+    compresscss.h \
+    compressfile.h \
+    profil.h \
+    utils.h \
+    config.h \
+    loadprofil.h \
+    manageprofil.h
 
 FORMS += \
-        mainwindow.ui
+        mainwindow.ui \
+    loadprofil.ui \
+    manageprofil.ui
 
 RESOURCES += \
     pics.qrc

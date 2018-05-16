@@ -54,6 +54,12 @@ bool writeFile( std::string filePath , std::vector<std::string>> content );
  */
 bool writeEndFile( std::string filePath , std::vector<std::string>> content );
 
+/**
+ * @brief function use to write a compress content in a file
+ * @retval success
+ */
+bool writeCompressFile(std::string filePath , char * content );
+
 /** 
  * @brief  function use to delete a file
  * @retval None
