@@ -33,8 +33,6 @@ along with Minifier.  If not, see <http://www.gnu.org/licenses/>.
 #include "utils.h"
 #include "profil.h"
 #include "compressfile.h"
-#include "compresscss.h"
-#include "compressjs.h"
 
 namespace code_compressor {
 
@@ -76,8 +74,7 @@ namespace code_compressor {
 
     private:
         // functions use to add file's compressor
-        void addCompressorCSS(const QString &filePath);
-        void addCompressorJS(const QString &filePath);
+        void addCompressorFile(const QString &filePath);
 
         ::std::vector<code_compressor::CompressFile *> _files;
         ::std::vector<::std::unique_ptr<code_compressor::Profil>> _profils;

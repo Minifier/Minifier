@@ -27,8 +27,6 @@ SOURCES += \
         main.cpp \
         mainwindow.cpp \
     codescompressor.cpp \
-    compressjs.cpp \
-    compresscss.cpp \
     compressfile.cpp \
     profil.cpp \
     utils.cpp \
@@ -38,8 +36,6 @@ SOURCES += \
 HEADERS += \
         mainwindow.h \
     codescompressor.h \
-    compressjs.h \
-    compresscss.h \
     compressfile.h \
     profil.h \
     utils.h \
