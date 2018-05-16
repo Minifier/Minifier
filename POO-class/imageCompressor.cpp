@@ -50,6 +50,7 @@ std::vector<std::vector<std::vector<int, int, int>>> imageToRGB() //OK
 			g=file[x][y][1];
 			b=file[x][y][2];
 			RGB[x][y].emplace_back(std::vector<r,g,b>);
+		}
 	}
 	return RGB;
 }
@@ -87,23 +88,23 @@ void ImageCompressor::YCrCbToRGB() /// OK
 //Sous échantillonage de la matrice YCbCr pour mettre à 0 les CbCr trois fois sur quatre car la chrominance est une donnée de l'image peut visible à l'oeil nue. 
 void ImageCompressor::Echant422()
 {
-	for (int i =0;i<(YCbCr.getSize()/2);i++){
-		for(int j=0 ; j<(YCbCr.getSize()/2);j++){
-			if (i%2==1 && j%2==0){
-				YCbCr[i][j][1]=0;
-			}
-			else if(j%2==1 && i%2==0){
-				YCbCr[i][j][2]=0;
-			}
-			else if(j%2==1 && i%2==1){
-				YCbCr[i][j][1]=0;
-				YCbCr[i][j][2]=0;
-			}
-			else if(j%2==0 && i%2==0){
-				continue;
-			}
+	for (int i =0;i<(YCbCr.getSize()/2);i++){ 
+		for(int j=0 ; j<(YCbCr.getSize()/2);j++){ 
+		      if (i%2==1 && j%2==0){ 
+			YCbCr[i][j][1]=0; 
+		      }
+		      else if(j%2==1 && i%2==0){ 
+			YCbCr[i][j][2]=0; 
+		      }
+		      else if(j%2==1 && i%2==1){ 
+			YCbCr[i][j][1]=0; 
+			YCbCr[i][j][2]=0; 
+		      }
+		      else if(j%2==0 && i%2==0){ 
+			continue; 
+		      }
 		}
-	}
+	} 
 }
 
 
@@ -118,9 +119,6 @@ void ImageCompressor::Decoup8x8()
 	//			
 	//	}
 	//}
-	std::vector<std::vector<std::vector<int>>> decoup[][8][8]
-	if(this->width_%8==0 && this->height_%8==0){
-		decoup.emplace_back(
 }
 
 /// Quantification des sous matrices 8x8 en fonction du coeffcient de qualité souhaité, on divide chaque composante par la valeur associée de quantification.
@@ -129,7 +127,7 @@ void ImageCompressor::Quantify() /// OK
 	int Quantify[_N][_N];
 	for (int i=0; i<_N; i++){ // Création de la matrice de quantification 8x8 avec un pas de quality_ 
 		for (int j=0; j<_N; j++){
-			Quantify[i][j]=1+(i+j+1)*(this->quality_);
+			Quantify[i][j]=1+(i+j+1)*this->quality_;
 		}
 	}
 	
