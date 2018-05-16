@@ -58,6 +58,8 @@ namespace code_compressor {
         void setProfil(const QString &cssFolder, const QString &jsFolder);
 
         void saveProfil(const QString &cfgName);
+        void deleteProfilByIndex(const int &index);
+        void renameProfilByIndex(const int &index, const QString &newName);
 
         bool checkExist(const QString& cfgName);
         

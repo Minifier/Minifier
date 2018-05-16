@@ -22,6 +22,15 @@ public:
     void setCompressor( code_compressor::CodesCompressor * c);
     void setProfils();
 
+private slots:
+    void on_listProfils_itemClicked(QListWidgetItem *item);
+
+    void on_deleteBtn_clicked();
+
+    void on_renameBtn_clicked();
+
+    void on_cancelBtn_clicked();
+
 private:
     Ui::ManageProfil *ui;
     QListWidgetItem * selected;

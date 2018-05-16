@@ -58,7 +58,7 @@ namespace code_compressor{
         UINT CompressCallback();
 
     protected:
-        QString _filePath, _outputFile;
+        QString _filePath, _outputFile, _cmd;
     };
 
     /*******************************************/

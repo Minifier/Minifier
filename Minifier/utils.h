@@ -63,6 +63,14 @@ QStringList readFile(const QString &filePath);
 bool writeFile(std::string filePath, std::vector<std::string> content);
 
 /**
+ * @brief writeFile write file
+ * @param filePath filepath of the file
+ * @param content content to write in the file
+ * @return true|false success
+ */
+bool writeFile(QString filePath, QStringList content);
+
+/**
  * @brief writeFile add content to a file
  * @param filePath filepath of the file
  * @param content content to write in the file

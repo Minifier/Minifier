@@ -31,6 +31,7 @@ void LoadProfil::on_buttonBox_accepted()
             if(this->selected->text() == this->compressor->_profilsName.at(i)){
                 this->loadConfig(this->compressor->getProfilInfoByIndex(i));
                 this->compressor->launchCompressorByIndex(i);
+                break;
             }
         }
     }

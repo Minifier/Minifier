@@ -21,6 +21,7 @@ along with Minifier.  If not, see <http://www.gnu.org/licenses/>.
 *******************************************************************/
 
 #include "codescompressor.h"
+#include <iostream>
 
 template<typename T, typename... Args>
 std::unique_ptr<T> make_unique(Args&&... args) {
@@ -68,7 +69,6 @@ void code_compressor::CodesCompressor::loadFiles()
     QFileInfoList list_css = dir_css.entryInfoList();
 
     // Browse files' list and launch file's compressor
-
     for (int i = 0; i < list_js.size(); ++i) {
         QFileInfo fileInfo = list_js.at(i);
         if(re_js_1.exactMatch(fileInfo.fileName()) && !re_js_2.exactMatch(fileInfo.fileName())){
@@ -157,6 +157,37 @@ void code_compressor::CodesCompressor::saveProfil(const QString &cfgName)
     this->_profil->save(cfgName);
     this->_profilsName << cfgName;
     this->_profils.push_back(make_unique<code_compressor::Profil>( * new code_compressor::Profil( this->_profil->fileName() , cfgName )));
+}
+
+/**
+ * @brief deleteProfilByIndex
+ * @param index
+ */
+void code_compressor::CodesCompressor::deleteProfilByIndex(const int &index)
+{
+    this->_profils.erase(this->_profils.begin() + index);
+    this->_profilsName.removeAt(index);
+    QStringList ctn;
+    for(int i = 0; i < (int)(this->_profils.size()) ; i++){
+        ctn << this->_profils[i]->getCfgName() << this->_profils[i]->fileName();
+    }
+    writeFile((ExePath() + PROFIL_FILE ), ctn);
+}
+
+/**
+ * @brief renameProfilByIndex
+ * @param index
+ * @param newName
+ */
+void code_compressor::CodesCompressor::renameProfilByIndex(const int &index, const QString &newName)
+{
+    this->_profils[index]->setCfgName(newName);
+    this->_profilsName.replace(index, newName);
+    QStringList ctn;
+    for(int i = 0; i < (int)(this->_profils.size()) ; i++){
+        ctn << this->_profils[i]->getCfgName() << this->_profils[i]->fileName();
+    }
+    writeFile((ExePath() + PROFIL_FILE ), ctn);
 }
 
 /**

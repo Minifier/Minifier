@@ -95,7 +95,6 @@ QStringList code_compressor::Profil::fileName()
     return retval;
 }
 
-
 /*******************************************/
 /************* Accesseur *******************/
 /*******************************************/
@@ -104,11 +103,16 @@ QString code_compressor::Profil::getJsFolder()
 {
     return this->jsFolder;
 }
+
 QString code_compressor::Profil::getCssFolder()
 {
     return this->cssFolder;
 }
 
+QString code_compressor::Profil::getCfgName()
+{
+    return this->configName;
+}
 
 /*******************************************/
 /************* Mutateur ********************/
@@ -122,4 +126,9 @@ void code_compressor::Profil::setJsFolder( const QString &jsFolder)
 void code_compressor::Profil::setCssFolder( const QString &cssFolder)
 {
     this->cssFolder = cssFolder;
+}
+
+void code_compressor::Profil::setCfgName(const QString &cfgName)
+{
+    this->configName = cfgName;
 }

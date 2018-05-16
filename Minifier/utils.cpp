@@ -132,6 +132,37 @@ bool writeFile(std::string filePath, std::vector<std::string> content)
 }
 
 /**
+ * @brief writeFile write file
+ * @param filePath filepath of the file
+ * @param content content to write in the file
+ * @return true|false success
+ */
+bool writeFile(QString filePath, QStringList content)
+{
+
+    try {
+        std::ofstream file(filePath.toUtf8(), std::ios::out | std::ios::trunc);
+
+        if (file)
+        {
+            for (int i = 0; i < content.size(); i++)
+            {
+                file << content.at(i).toUtf8().constData() << std::endl;
+            }
+
+            file.close();
+        }
+
+    }
+    catch (const std::exception& e) {
+        throw e;
+        return false;
+    }
+    return true;
+}
+
+
+/**
  * @brief writeFile add content to a file
  * @param filePath filepath of the file
  * @param content content to write in the file

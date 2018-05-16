@@ -59,10 +59,12 @@ namespace code_compressor {
         // Accesseur
         QString getJsFolder();
         QString getCssFolder();
+        QString getCfgName();
 
         // Mutateur
         void setJsFolder( const QString &jsFolder);
         void setCssFolder( const QString &cssFolder);
+        void setCfgName( const QString &cfgName);
 
     private:
         QString configName, jsFolder, cssFolder;
