@@ -72,20 +72,20 @@ void code_compressor::CodesCompressor::loadFiles()
     for (int i = 0; i < list_js.size(); ++i) {
         QFileInfo fileInfo = list_js.at(i);
         if(re_js_1.exactMatch(fileInfo.fileName()) && !re_js_2.exactMatch(fileInfo.fileName())){
-            this->addCompressorJS(this->_profil->getJsFolder() + fileInfo.fileName());
+            this->addCompressorFile(this->_profil->getJsFolder() + fileInfo.fileName());
         }
         else if(re_css_1.exactMatch(fileInfo.fileName()) && !re_css_2.exactMatch(fileInfo.fileName())){
-            this->addCompressorCSS(this->_profil->getJsFolder() + fileInfo.fileName());
+            this->addCompressorFile(this->_profil->getJsFolder() + fileInfo.fileName());
         }
     }
 
     for (int i = 0; i < list_css.size(); ++i) {
         QFileInfo fileInfo = list_css.at(i);
         if(re_js_1.exactMatch(fileInfo.fileName()) && !re_js_2.exactMatch(fileInfo.fileName())){
-            this->addCompressorJS(this->_profil->getCssFolder() + fileInfo.fileName());
+            this->addCompressorFile(this->_profil->getCssFolder() + fileInfo.fileName());
         }
         else if(re_css_1.exactMatch(fileInfo.fileName()) && !re_css_2.exactMatch(fileInfo.fileName())){
-            this->addCompressorCSS(this->_profil->getCssFolder() + fileInfo.fileName());
+            this->addCompressorFile(this->_profil->getCssFolder() + fileInfo.fileName());
         }
     }
 }
@@ -198,19 +198,10 @@ QStringList code_compressor::CodesCompressor::getProfilInfoByIndex(const int &i)
 }
 
 /**
- * @brief addCompressorCSS use to add CompressCSS to files
+ * @brief addCompressorFile use to add CompressFile to files
  * @param filePath way to access to the file
  */
-void code_compressor::CodesCompressor::addCompressorCSS(const QString &filePath)
+void code_compressor::CodesCompressor::addCompressorFile(const QString &filePath)
 {
-    this->_files.push_back(new code_compressor::CompressCSS(filePath));
-}
-
-/**
- * @brief addCompressorJS use to add CompressJS to files
- * @param filePath way to access to the file
- */
-void code_compressor::CodesCompressor::addCompressorJS(const QString &filePath)
-{
-    this->_files.push_back(new code_compressor::CompressJS(filePath));
+    this->_files.push_back(new code_compressor::CompressFile(filePath));
 }
