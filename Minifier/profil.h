@@ -29,7 +29,6 @@ along with Minifier.  If not, see <http://www.gnu.org/licenses/>.
 #include <QLineEdit>
 
 #include <string>
-#include <iostream>
 #include <vector>
 
 #include "utils.h"

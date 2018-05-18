@@ -1,4 +1,3 @@
-
 /*******************************************************************
 Copyright (C) 2018 Oscar MARIE--TAILLEFER   <o5mariet@enib.fr>
 Copyright (C) 2018 Nils JEGOU-GERGAUD       <n5jegoug@enib.fr>

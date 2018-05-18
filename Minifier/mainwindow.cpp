@@ -5,19 +5,25 @@ MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
+    // Initialize empty js_folder and css_folder
     this->js_folder = " ";
     this->css_folder = " ";
 
+    // Set default state for js and css checkBox
     this->js_selected = true;
     this->css_selected = false;
 
+    // Create an empty codes compressor manager
     this->codeCompressor = new code_compressor::CodesCompressor();
+
+    // Set link to the compressor for manageProfil (m) and loadProfil (p) ui
     p.setCompressor(this->codeCompressor);
     m.setCompressor(this->codeCompressor);
 
     // Connect between LoadProfil and MainWindow to change ui
     QObject::connect(&p, SIGNAL(loadConfig(QStringList)) , this, SLOT(setConfigInfo(QStringList)));
 
+    // Qt function
     ui->setupUi(this);
 }
 
@@ -31,12 +37,18 @@ MainWindow::~MainWindow()
  */
 void MainWindow::launchCodeCompressor()
 {
+    // Create an empty param list and set css and js path to folder
     QStringList folder;
     folder << this->css_folder << this->js_folder;
 
+    // Launch manager on param
     this->codeCompressor->launchCompressor(folder);
+
+    // Set stop and create action enable in ui
     ui->actionStop->setEnabled(true);
     ui->create_config->setEnabled(true);
+
+    // Show message box success
     QMessageBox::information(this,"Lancement du compresseur","Le compresseur est bien lancé. \nPour le stop, cliquez sur le bouton stop.");
 }
 
@@ -46,8 +58,9 @@ void MainWindow::launchCodeCompressor()
  */
 void MainWindow::setConfigInfo(const QStringList &info)
 {
-    if(info.at(0) != " ")
+    if(info.at(0) != " ") // info.at(0) <=> css_folder
     {
+        // If isset
         this->css_folder = info.at(0);
         // set css checkBox at selected
         this->css_selected = true;
@@ -57,14 +70,16 @@ void MainWindow::setConfigInfo(const QStringList &info)
         // Change css_browser style to notify that a directory is set
         ui->css_browser->setStyleSheet("background-color: #0b94d1;border: none;");
     } else {
+        // If empty
         this->css_selected = false;
         ui->cssCheck->setCheckState(Qt::Unchecked);
         ui->cssPath->setText("");
         ui->css_browser->setStyleSheet("background-color:#fff;border:0 solid #0b94d1;border-bottom: 2px solid #0b94d1;");
     }
 
-    if(info.at(1) != " ")
+    if(info.at(1) != " ") // info.at(0) <=> js_folder
     {
+        //If isset
         this->js_folder = info.at(1);
         this->js_selected = true;
         ui->jsCheck->setCheckState(Qt::Checked);
@@ -73,6 +88,7 @@ void MainWindow::setConfigInfo(const QStringList &info)
         // Change js_browser style to notify that a directory is set
         ui->js_browser->setStyleSheet("background-color: #0b94d1;border: none;");
     } else {
+        // If empty
         this->js_selected = false;
         ui->jsCheck->setCheckState(Qt::Unchecked);
         ui->jsPath->setText("");
@@ -80,6 +96,7 @@ void MainWindow::setConfigInfo(const QStringList &info)
 
     }
 
+    // Set stop action enable in ui
     ui->actionStop->setEnabled(true);
 
     QMessageBox::information(this,"Chargement du profil","Le profil a bien été chargé.");
@@ -113,6 +130,9 @@ void MainWindow::on_css_browser_clicked()
     ui->css_browser->setStyleSheet("background-color: #0b94d1;border: none;");
 }
 
+/**
+ * @brief MainWindow::on_launchCode_clicked launch compressor after check on users'inputs
+ */
 void MainWindow::on_launchCode_clicked()
 {
     int error = 0;
@@ -152,7 +172,7 @@ void MainWindow::on_launchCode_clicked()
 
 void MainWindow::on_jsCheck_stateChanged(int arg1)
 {
-    if(arg1 == 2){
+    if(arg1 == Qt::Checked){
         this->js_selected = true;
     }else{
         this->js_selected = false;
@@ -163,12 +183,12 @@ void MainWindow::on_jsCheck_stateChanged(int arg1)
 
 void MainWindow::on_cssCheck_stateChanged(int arg1)
 {
-    if(arg1 == 2){
+    if(arg1 == Qt::Checked){
         this->css_selected = true;
     }else{
         this->css_selected = false;
         ui->css_browser->setStyleSheet("background-color:#fff;border:0 solid #0b94d1;border-bottom: 2px solid #0b94d1;");
-        ui->jsPath->setText("");
+        ui->cssPath->setText("");
     }
 }
 
@@ -178,22 +198,21 @@ void MainWindow::on_create_config_triggered()
         QMessageBox::warning(this,"Erreur","Veuillez lancer le compresseur avant de sauvegarder sa configuration.");
     }else{
         bool ok;
-        bool exist = false;
         QString text;
         do{
             text = QInputDialog::getText(this, "Sauvegarde d'une configuration." , "Entrer un nom pour sauvegarder la configuration:" , QLineEdit::Normal,QDir::home().dirName(), &ok);
-            if(this->codeCompressor->checkExist(text))
-            {
-                exist = true;
-                QMessageBox::warning(this,"Nom de configuration","Ce nom de configuration est déjà utilisé.");
-            }else{
-                exist = false;
-            }
             if(!ok){
                 return;
             }
+            if(this->codeCompressor->checkExist(text))
+            {
+                ok = true;
+                QMessageBox::warning(this,"Nom de configuration","Ce nom de configuration est déjà utilisé.");
+            }else{
+                ok = false;
+            }
         }
-        while(text.isEmpty() || exist);
+        while(text.isEmpty() || ok);
         this->codeCompressor->saveProfil(text);
         QMessageBox::information(this,"Sauvegarde du profil","Le profil a bien été sauvegardé.");
     }
@@ -201,12 +220,14 @@ void MainWindow::on_create_config_triggered()
 
 void MainWindow::on_load_config_triggered()
 {
+    // Refresh profils list and show
     p.setProfils();
     p.show();
 }
 
 void MainWindow::on_manage_config_triggered()
 {
+    // Refresh profils list and show
     m.setProfils();
     m.show();
 }

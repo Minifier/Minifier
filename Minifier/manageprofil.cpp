@@ -15,11 +15,18 @@ ManageProfil::~ManageProfil()
     delete ui;
 }
 
+/**
+ * @brief ManageProfil::setCompressor set pointer to codeCompresssor
+ * @param c pointer to codeCompressor
+ */
 void ManageProfil::setCompressor( code_compressor::CodesCompressor * c)
 {
     this->compressor = c;
 }
 
+/**
+ * @brief ManageProfil::setProfils reload profils list
+ */
 void ManageProfil::setProfils()
 {
     if(this->compressor != nullptr)
@@ -47,9 +54,11 @@ void ManageProfil::on_deleteBtn_clicked()
         {
             if(this->selected->text() == this->compressor->_profilsName.at(i)){
                 this->compressor->deleteProfilByIndex(i);
-                break;
+                break; // Avoid repetitions
             }
         }
+
+        // Refresh profils list
         this->setProfils();
     }
 }
@@ -61,22 +70,21 @@ void ManageProfil::on_renameBtn_clicked()
         QMessageBox::warning(this,"Selection d'un profil.","Aucune profil n'a été selectionné.");
     }else{
         bool ok;
-        bool exist = false;
         QString text;
         do{
             text = QInputDialog::getText(this, "Sauvegarde d'une configuration." , "Entrer un nom pour sauvegarder la configuration:" , QLineEdit::Normal,QDir::home().dirName(), &ok);
-            if(this->compressor->checkExist(text))
-            {
-                exist = true;
-                QMessageBox::warning(this,"Nom de configuration","Ce nom de configuration est déjà utilisé.");
-            }else{
-                exist = false;
-            }
             if(!ok){
                 return;
             }
+            if(this->compressor->checkExist(text))
+            {
+                ok = true;
+                QMessageBox::warning(this,"Nom de configuration","Ce nom de configuration est déjà utilisé.");
+            }else{
+                ok = false;
+            }
         }
-        while(text.isEmpty() || exist);
+        while(text.isEmpty() || ok);
         for( int i = 0; i < this->compressor->_profilsName.size() ; i++)
         {
             if(this->selected->text() == this->compressor->_profilsName.at(i)){
