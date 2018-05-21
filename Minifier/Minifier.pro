@@ -50,3 +50,5 @@ FORMS += \
 
 RESOURCES += \
     pics.qrc
+
+RC_FILE += minifier.rc

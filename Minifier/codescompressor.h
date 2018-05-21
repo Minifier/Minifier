@@ -69,6 +69,8 @@ namespace code_compressor {
 
         QStringList getProfilInfoByIndex(const int &i);
 
+        bool running();
+
         bool availableProfil;
 
         ::std::unique_ptr<code_compressor::Profil> _profil;
@@ -80,6 +82,8 @@ namespace code_compressor {
 
         ::std::vector<code_compressor::CompressFile *> _files;
         ::std::vector<::std::unique_ptr<code_compressor::Profil>> _profils;
+
+        bool _state;
     };
 
 } //end code_compressor

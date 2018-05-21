@@ -23,6 +23,8 @@ MainWindow::MainWindow(QWidget *parent) :
     // Connect between LoadProfil and MainWindow to change ui
     QObject::connect(&p, SIGNAL(loadConfig(QStringList)) , this, SLOT(setConfigInfo(QStringList)));
 
+    this->setupSystemTray();
+
     // Qt function
     ui->setupUi(this);
 }
@@ -47,6 +49,7 @@ void MainWindow::launchCodeCompressor()
     // Set stop and create action enable in ui
     ui->actionStop->setEnabled(true);
     ui->create_config->setEnabled(true);
+    this->_stop->setEnabled(true);
 
     // Show message box success
     QMessageBox::information(this,"Lancement du compresseur","Le compresseur est bien lancé. \nPour le stop, cliquez sur le bouton stop.");
@@ -98,8 +101,81 @@ void MainWindow::setConfigInfo(const QStringList &info)
 
     // Set stop action enable in ui
     ui->actionStop->setEnabled(true);
+    this->_stop->setEnabled(true);
 
     QMessageBox::information(this,"Chargement du profil","Le profil a bien été chargé.");
+}
+
+void MainWindow::setupSystemTray()
+{
+    this->_sysTray = new QSystemTrayIcon(this);
+
+    // Initialize menu
+    this->_menu = new QMenu(this);
+
+    // Initialize actions
+    this->_start = new QAction("Launch compressor",this);
+    this->_stop = new QAction("Stop compressor",this);
+    this->_open = new QAction("Open Main Window",this);
+    this->_exit = new QAction("Exit application",this);
+
+    // Connect action
+    QObject::connect(this->_start,SIGNAL(triggered()),this,SLOT(runFromStray()));
+    QObject::connect(this->_stop,SIGNAL(triggered()),this,SLOT(stopFromStray()));
+    QObject::connect(this->_open,SIGNAL(triggered()),this,SLOT(show()));
+    QObject::connect(this->_exit,SIGNAL(triggered()),this,SLOT(close()));
+
+    // Add actions to menu
+    this->_menu->addAction(this->_start);
+    this->_menu->addAction(this->_stop);
+    this->_menu->addAction(this->_open);
+    this->_menu->addSeparator();
+    this->_menu->addAction(this->_exit);
+
+    this->_start->setEnabled(false);
+    this->_stop->setEnabled(false);
+
+    // Set icon to system tray
+    this->_sysTray->setIcon(QIcon(":/pics/img/icon.png"));
+
+    // Set menu to system tray
+    this->_sysTray->setContextMenu(this->_menu);
+    this->show();
+}
+
+/**
+ * @brief runFromStray slot use to run compressor from system tray
+ */
+void MainWindow::runFromStray()
+{
+    this->codeCompressor->compress();
+    this->_stop->setEnabled(true);
+    this->_start->setEnabled(false);
+    ui->actionRun->setEnabled(false);
+    ui->actionStop->setEnabled(true);
+}
+
+/**
+ * @brief stopFromStray slot use to stop compressor from system tray
+ */
+void MainWindow::stopFromStray()
+{
+    this->codeCompressor->stop();
+    this->_stop->setEnabled(false);
+    this->_start->setEnabled(true);
+    ui->actionRun->setEnabled(true);
+    ui->actionStop->setEnabled(false);
+}
+
+void MainWindow::closeEvent (QCloseEvent *event)
+{
+    if(this->isVisible() && this->codeCompressor->running()){
+        event->ignore();
+        QMessageBox::information(this, "Minifier" , tr("Le programme continue de compresser en tâches de fond.\n"
+                                                 "Vous pouvez le fermer dans la zone de notification"));
+        this->hide();
+        QCoreApplication::processEvents();
+    }
 }
 
 void MainWindow::on_js_browser_clicked()
@@ -239,6 +315,8 @@ void MainWindow::on_actionRun_triggered()
     }else{
         this->codeCompressor->compress();
         ui->actionStop->setEnabled(true);
+        this->_stop->setEnabled(true);
+        this->_start->setEnabled(false);
         QMessageBox::information(this,"Lancement du compresseur","Le compresseur est bien lancé. \nPour le stop, cliquez sur le bouton stop.");
     }
 }
@@ -248,5 +326,37 @@ void MainWindow::on_actionStop_triggered()
     this->codeCompressor->stop();
     ui->actionStop->setEnabled(false);
     ui->actionRun->setEnabled(true);
+    this->_stop->setEnabled(false);
+    this->_start->setEnabled(true);
     QMessageBox::information(this,"Arrêt du compresseur","Le compresseur est bien stoppé. \nPour le relancer, cliquez sur le bouton run.");
+}
+
+void MainWindow::on_loadImg_clicked()
+{
+    this->img_path = QFileDialog::getOpenFileName(this, tr("Charger une image"), "C:\\" , tr("Fichiers images (*.png *.jpg *.bmp)"));
+}
+
+void MainWindow::on_qualitySlider_valueChanged(int value)
+{
+    ui->qualtiySpinBox->setValue(value);
+}
+
+void MainWindow::on_qualtiySpinBox_valueChanged(int arg1)
+{
+    ui->qualitySlider->setValue(arg1);
+}
+
+void MainWindow::iconActivated(QSystemTrayIcon::ActivationReason reason)
+{
+    switch (reason){
+    case QSystemTrayIcon::Trigger:
+        if(!this->isVisible()){
+            this->show();
+        } else {
+            this->hide();
+        }
+        break;
+    default:
+        break;
+    }
 }

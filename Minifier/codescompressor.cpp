@@ -32,6 +32,7 @@ code_compressor::CodesCompressor::CodesCompressor()
 {
     this->availableProfil = this->loadProfils();
     this->_profil = nullptr;
+    this->_state = false;
 }
 
 code_compressor::CodesCompressor::~CodesCompressor()
@@ -88,6 +89,7 @@ void code_compressor::CodesCompressor::loadFiles()
             this->addCompressorFile(this->_profil->getCssFolder() + fileInfo.fileName());
         }
     }
+    this->_state = true;
 }
 
 /**
@@ -95,6 +97,7 @@ void code_compressor::CodesCompressor::loadFiles()
  */
 void code_compressor::CodesCompressor::compress()
 {
+    this->_state = true;
     for (size_t i = 0; i < this->_files.size(); i++){
         (this->_files[i])->compress();
     }
@@ -105,6 +108,7 @@ void code_compressor::CodesCompressor::compress()
  */
 void code_compressor::CodesCompressor::stop()
 {
+    this->_state = false;
     for (size_t i = 0; i < this->_files.size(); i++){
         (this->_files[i])->stop();
     }
@@ -235,4 +239,13 @@ QStringList code_compressor::CodesCompressor::getProfilInfoByIndex(const int &i)
 void code_compressor::CodesCompressor::addCompressorFile(const QString &filePath)
 {
     this->_files.push_back(new code_compressor::CompressFile(filePath));
+}
+
+/**
+ * @brief running use to know if compressors are running
+ * @return true|false running state
+ */
+bool code_compressor::CodesCompressor::running()
+{
+    return this->_state;
 }

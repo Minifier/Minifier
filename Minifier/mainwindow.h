@@ -26,6 +26,11 @@ along with Minifier.  If not, see <http://www.gnu.org/licenses/>.
 #include <QMainWindow>
 #include <QFileDialog>
 #include <QMessageBox>
+#include <QSystemTrayIcon>
+#include <QObject>
+#include <QAction>
+#include <QMenu>
+#include <QCloseEvent>
 
 #include "codescompressor.h"
 #include "loadprofil.h"
@@ -48,12 +53,24 @@ public:
      */
     void launchCodeCompressor();
 
+    void setupSystemTray();
+
 private slots:
     /**
      * @brief setConfigInfo slot use during profile loading to change ui
      * @param info list(cssFolder,jsFolder)
      */
     void setConfigInfo(const QStringList &info);
+
+    /**
+     * @brief runFromStray slot use to run compressor from system tray
+     */
+    void runFromStray();
+
+    /**
+     * @brief stopFromStray slot use to stop compressor from system tray
+     */
+    void stopFromStray();
 
     void on_js_browser_clicked();
 
@@ -75,13 +92,37 @@ private slots:
 
     void on_actionStop_triggered();
 
+    void on_loadImg_clicked();
+
+    void on_qualitySlider_valueChanged(int value);
+
+    void on_qualtiySpinBox_valueChanged(int arg1);
+
+protected:
+    /* Virtual function of the parent class in our class
+     * Overridden to change the behavior of the application,
+     * That it is minimized to tray when we want
+     */
+    void closeEvent(QCloseEvent * event);
+
+private slots:
+    /* The slot that will accept the signal from the event
+     * Click on the application icon in the system tray
+     */
+    void iconActivated(QSystemTrayIcon::ActivationReason reason);
+
 private:
     Ui::MainWindow *ui;
     LoadProfil p;
     ManageProfil m;
 
-    QString css_folder, js_folder;
+    QString css_folder, js_folder, img_path;
     bool css_selected, js_selected;
+
+
+    QSystemTrayIcon * _sysTray;
+    QMenu * _menu;
+    QAction * _start, * _stop, * _exit, * _open;
 
     code_compressor::CodesCompressor * codeCompressor;
 };
