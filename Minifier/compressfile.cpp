@@ -50,7 +50,7 @@ code_compressor::CompressFile::CompressFile(const QString &filePath)
         this->setOutputFile(path + ".min." + c.at(sl-1));
     }
     
-    this->_cmd = "cmd /c \"" + ExePath() + CSSMIN_PATH + c.at(sl-1) + "min.exe" + " <" + this->_filePath + "> " + this->_outputFile + "\"";
+    this->_cmd = "cmd /c \"" + ExePath() + c.at(sl-1) + "min.exe" + " <" + this->_filePath + "> " + this->_outputFile + "\"";
 
     // Create file watcher
     fileWatch = new QFileSystemWatcher(this);
