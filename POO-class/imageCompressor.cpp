@@ -23,6 +23,13 @@ along with Minifier.  If not, see <http://www.gnu.org/licenses/>.
 #include "imageCompressor.hpp"
 #define _N 8
 
+int Quantify[_N][_N];
+	for (int i=0; i<_N; i++){ // Création de la matrice de quantification 8x8 avec un pas de quality_ 
+		for (int j=0; j<_N; j++){
+			Quantify[i][j]=1+(i+j+1)*this->quality_;
+		}
+	}
+
 ImageCompressor::ImageCompressor(std::string n, int h, int w, std::string ext, int q, int d, std::string f) // Constructeur de la classe ImageCompressor
     : name_{n}, height_{h}, width_{w}, extension_{ext}, quality_{q}, dimension_{d}, file_{f} ///OK
 {
@@ -86,7 +93,7 @@ void ImageCompressor::YCrCbToRGB() /// OK
 }
 
 //Sous échantillonage de la matrice YCbCr pour mettre à 0 les CbCr trois fois sur quatre car la chrominance est une donnée de l'image peut visible à l'oeil nue. 
-void ImageCompressor::Echant422()
+void ImageCompressor::Echant422() /// OK
 {
 	for (int i =0;i<(YCbCr.getSize()/2);i++){ 
 		for(int j=0 ; j<(YCbCr.getSize()/2);j++){ 
@@ -123,15 +130,8 @@ void ImageCompressor::Decoup8x8()
 
 /// Quantification des sous matrices 8x8 en fonction du coeffcient de qualité souhaité, on divide chaque composante par la valeur associée de quantification.
 void ImageCompressor::Quantify() /// OK
-{
-	int Quantify[_N][_N];
-	for (int i=0; i<_N; i++){ // Création de la matrice de quantification 8x8 avec un pas de quality_ 
-		for (int j=0; j<_N; j++){
-			Quantify[i][j]=1+(i+j+1)*this->quality_;
-		}
-	}
-	
-	for (int i =0; i < _N; i++){ // Modification des matrices 8x8 DCT en divisant chaque composante par son coefficient de qualité dans la matrice Quatify.
+{	
+	for (int i =0; i < _N; i++){ // Modification des matrices 8x8 DCT en divisant chaque composante par son coefficient de qualité dans la matrice Quantify.
 		for (int j=0; j< _N; j++){
 			int DCTQ[i][j]=DCT[i][j]/Quantify[i][j];
 		}
@@ -147,32 +147,38 @@ void ImageCompressor::ZigZag()
 	int maxJ =_N-1;
 	int croiss = 0;
 	
-	while (i <= maxI && j <= maxJ){ // Parcours de la matrice 8x8 en Zig-Zag
-		if (i == 0 || i == maxI){
-			if (j == maxJ){
-				j -= 1;
-				i += 1;
-			}
-			j += 1;
-		}
-		else{
-			if (j == 0 || j == maxJ){
-				if (i == maxI){
-					i -= 1;
-					j += 1;
+	std::vector<std::vector<int>> liste[nbBlock][64];
+	
+	for (int b=0; b<nbBlock; b++{
+		while (i <= maxI && j <= maxJ){ // Parcours de la matrice 8x8 en Zig-Zag
+			if (i == 0 || i == maxI){
+				if (j == maxJ){
+					j -= 1;
+					i += 1;
 				}
-				i += 1;
+				j += 1;
 			}
-		}
-		if (i == 0 || j == maxJ) { croiss = 0;}
-		if (j == 0 || i == maxI)  { croiss = 1;}
-		if (croiss==1) {
-			i -= 1;
-			j += 1;
-		}
-		else{
-			i += 1;
-			j -= 1;
+			else{
+				if (j == 0 || j == maxJ){
+					if (i == maxI){
+						i -= 1;
+						j += 1;
+					}
+					i += 1;
+				}
+			}
+			if (i == 0 || j == maxJ) { croiss = 0;}
+			if (j == 0 || i == maxI)  { croiss = 1;}
+			if (croiss==1) {
+				i -= 1;
+				j += 1;
+			}
+			else{
+				i += 1;
+				j -= 1;
+			}
+			
+			liste[b].emplace_back(listeDecoup8x8[i][j]);
 		}
 	}
 }
@@ -220,29 +226,20 @@ void ImageCompressor::resize() //Optionnel
 
 }
 
-void ImageCompressor::createImageSource()//PNG to JPEG
-{
-
-}
-
-void ImageCompressor::createImageCible()//PNG to JPEG
-{
-
-}
-
-void ImageCompressor::toCible() //PNG to JPEG
-{
-
-}
 
 void ImageCompressor::HuffmanInverse()
 {
 
 }
 
-void ImageCompressor::unquantify()
+/// Déquantification des sous matrices 8x8 après compression en fonction du coeffcient de qualité souhaité, on multiplie chaque composante par la valeur associée de quantification.
+void ImageCompressor::unquantify() /// OK
 {
-
+	for (int i =0; i < _N; i++){ // Modification des matrices 8x8 HuffmanInverse en multipliant chaque composante par son coefficient de qualité dans la matrice Quantify.
+		for (int j=0; j< _N; j++){
+			int DCTQI[i][j]=HuffInv[i][j]*Quantify[i][j];
+		}
+	}
 }
 
 void ImageCompressor::DCTInverse() /// OK

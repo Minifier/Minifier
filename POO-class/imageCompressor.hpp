@@ -28,6 +28,7 @@ along with Minifier.  If not, see <http://www.gnu.org/licenses/>.
 #include "utils.cpp"
 #include <cmath>
 
+
 namespace imageCompress{
 	
 class ImageCompressor{
@@ -55,9 +56,6 @@ public :
     void DCT();
     void Huffman();
     void resize();
-    void createImageSource();
-    void createImageCible();
-    void toCible();
     void HuffmanInverse();
     void unquantify();
     void DCTInverse();
