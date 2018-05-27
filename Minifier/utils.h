@@ -19,6 +19,8 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Minifier.  If not, see <http://www.gnu.org/licenses/>.
 *******************************************************************/
+#ifndef utils_hpp
+#define utils_hpp 1
 
 #include <QString>
 #include <QStringList>
@@ -31,6 +33,29 @@ along with Minifier.  If not, see <http://www.gnu.org/licenses/>.
 #include <iostream>
 #include <fstream>
 #include <stdio.h>
+
+#include "CImg.h"
+
+struct rgb{
+    unsigned char r;
+    unsigned char g;
+    unsigned char b;
+};
+
+inline void to_rgb(const unsigned char &r, const unsigned char &g, const unsigned char &b, rgb * dist)
+{
+    (*dist).r = r;
+    (*dist).g = g;
+    (*dist).b = b;
+}
+/**
+ *@brief readJPEG function use to read a jpeg file
+ *@param filePath file file's path
+ *@param res list of rgb
+ *@param w weight of picture
+ *@param h height of picture
+ */
+void readJPEG(const char* &filePath, rgb *& res , unsigned int * w, unsigned int * h);
 
 /**
  * @brief explode explode a string by delim
@@ -112,3 +137,5 @@ int getFileSize(const std::string &fileName);
  * @return path where program is execute
  */
 QString ExePath();
+
+#endif

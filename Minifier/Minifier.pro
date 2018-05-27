@@ -31,7 +31,8 @@ SOURCES += \
     profil.cpp \
     utils.cpp \
     loadprofil.cpp \
-    manageprofil.cpp
+    manageprofil.cpp \
+    imagecompressor.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -41,7 +42,26 @@ HEADERS += \
     utils.h \
     config.h \
     loadprofil.h \
-    manageprofil.h
+    manageprofil.h \
+    CImg.h \
+    plugins/add_fileformat.h \
+    plugins/bayer.h \
+    plugins/chlpca.h \
+    plugins/cvMat.h \
+    plugins/draw_gradient.h \
+    plugins/inpaint.h \
+    plugins/ipl.h \
+    plugins/ipl_alt.h \
+    plugins/jpeg_buffer.h \
+    plugins/loop_macros.h \
+    plugins/matlab.h \
+    plugins/nlmeans.h \
+    plugins/skeleton.h \
+    plugins/tiff_stream.h \
+    plugins/tinymatwriter.h \
+    plugins/vrml.h \
+    plugins/vtk.h \
+    imagecompressor.h
 
 FORMS += \
         mainwindow.ui \
@@ -52,3 +72,8 @@ RESOURCES += \
     pics.qrc
 
 RC_FILE += minifier.rc
+
+win32: LIBS += -L$$PWD/./ -lgdi32
+
+INCLUDEPATH += $$PWD/.
+DEPENDPATH += $$PWD/.
