@@ -18,9 +18,9 @@ along with Minifier.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "imagecompressor.h"
 
-/*
 #define _N 8
 
+/*
 int Quantify[_N][_N];
 for (int i=0; i<_N; i++){ // Création de la matrice de quantification 8x8 avec un pas de quality_
     for (int j=0; j<_N; j++){
@@ -147,12 +147,19 @@ void ImageCompressor::Decoup8x8()
     }
 }
 
-/// Quantification des sous matrices 8x8 en fonction du coeffcient de qualité souhaité, on divide chaque composante par la valeur associée de quantification.
-void ImageCompressor::Quantify() /// OK
-{
-    for (int i =0; i < _N; i++){ // Modification des matrices 8x8 DCT en divisant chaque composante par son coefficient de qualité dans la matrice Quantify.
-        for (int j=0; j< _N; j++){
-            int DCTQ[i][j]=DCT[i][j]/Quantify[i][j];
+/**
+ * @brief  Quantification des sous matrices 8x8 en fonction du coeffcient de qualité souhaité, on divide chaque composante par la valeur associée de quantification.
+ */
+void ImageCompressor::Quantify()
+{    
+    for(unsigned int k = 0; k < this->_subMat; k++ )
+    {
+        for (int i =0; i < _N; i++){
+            for (int j=0; j< _N; j++){
+                this->_subContent[k][i*_N +j][0]=this->_subContent[k][i*_N +j][0]/(1+(i+j+1)*this->quality_);
+                this->_subContent[k][i*_N +j][1]=this->_subContent[k][i*_N +j][1]/(1+(i+j+1)*this->quality_);
+                this->_subContent[k][i*_N +j][2]=this->_subContent[k][i*_N +j][2]/(1+(i+j+1)*this->quality_);
+            }
         }
     }
 }
@@ -250,7 +257,7 @@ void ImageCompressor::unquantify() /// OK
 {
     for (int i =0; i < _N; i++){ // Modification des matrices 8x8 HuffmanInverse en multipliant chaque composante par son coefficient de qualité dans la matrice Quantify.
         for (int j=0; j< _N; j++){
-            int DCTQI[i][j]=HuffInv[i][j]*Quantify[i][j];
+            int DCTQI[i][j]=this->_subContent[*(1+(i+j+1)*this->quality_);
         }
     }
 }
