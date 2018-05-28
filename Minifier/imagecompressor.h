@@ -63,7 +63,6 @@ public :
     inline unsigned int getHeight();
     inline unsigned int getWidth();
     inline unsigned int getQuality();
-    inline QString getName();
     inline QString getFile();
     inline QString getOutputFilePath();
 
@@ -72,7 +71,6 @@ public :
     inline void setHeight( const unsigned int &h);
     inline void setWidth( const unsigned int &w);
     inline void setQuality( const unsigned int &q);
-    inline void setName( const QString &name);
     inline void setFilePath( const QString &filePath);
     inline void setOutputFilePath( const QString &output);
 
