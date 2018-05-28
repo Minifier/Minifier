@@ -108,9 +108,6 @@ void ImageCompressor::Echant422()
                 this->content_[count + j][1] = 0;
                 this->content_[count + j][2] = 0;
             }
-            else if(j%2==0 && i%2==0){
-              continue;
-            }
         }
     }
 }
@@ -119,14 +116,35 @@ void ImageCompressor::Echant422()
 //Découpage de la matrice Initiale YCbCr en bloc de 8x8 pour le sous échantillonage pour permettre de gagner en temps de calcul.
 void ImageCompressor::Decoup8x8()
 {
-    //std::vector<int, int, int> sousMat[8][8];
-
-    sousMat = mat2cell(Echant,8,8);
-    //for (int i=0; i<this->length_;i++){
-    //	for (int j=0; j<this->height_;j++){
-    //
-    //	}
-    //}
+    unsigned int nW = this->weight_ / 8 ;
+    unsigned int nh = this->height_ / 8;
+    this->_subMat = nw * nh ;
+    
+    this->_subContent = new rgb[this->_subMat][64];
+    
+    unsigned int cursor = 0;
+    
+    unsigned int x1 = 0;
+    unsigned int y1 = 0;
+            
+    for(unsigned int i = 0; i < nW; i++)
+    {
+        x1 = i * 8;
+        for(unsigned int j = 0; j < nH; j++)
+        {
+            cursor ++;
+            for(unsigned int k = 0; k < 8; k++)
+            {
+                x1++;
+                y1 = j * 8;
+                for(unsigned int l = 0; l < 8; l++)
+                {
+                    y1++;
+                    this->_subContent[cursor][x1 + y1] = this->content_[x1 + y1];
+                }
+            }
+        }
+    }
 }
 
 /// Quantification des sous matrices 8x8 en fonction du coeffcient de qualité souhaité, on divide chaque composante par la valeur associée de quantification.
@@ -186,7 +204,7 @@ void ImageCompressor::ZigZag()
 
 void ImageCompressor::DCT() /// OK
 {
-    std::vector<std::vector<int>> DCT[_N][_N];
+    rgb DCT[_N][_N];
     for (int i=0;i<_N;i++){ // Création de la matrice DCT, Valeurs fixes dans la première colonne et la première ligne.
         for(int j=0; j<_N; j++){
             if(j==0 && i==0){
@@ -221,12 +239,6 @@ void ImageCompressor::Huffman()
 {
 
 }
-
-void ImageCompressor::resize() //Optionnel
-{
-
-}
-
 
 void ImageCompressor::HuffmanInverse()
 {
