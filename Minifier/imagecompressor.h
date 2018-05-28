@@ -33,9 +33,9 @@ public :
 
     ImageCompressor(const std::string &n, const unsigned int &q, const std::string &f);
 
-    ImageCompressor(ImageCompressor &&) = default;
+    ImageCompressor(ImageCompressor &&) = delete;
     ImageCompressor(const ImageCompressor &) = default;
-    ImageCompressor &operator=(ImageCompressor &&) = default;
+    ImageCompressor &operator=(ImageCompressor &&) = delete;
     ImageCompressor &operator=(const ImageCompressor &) = default;
     ~ImageCompressor();
 
@@ -76,10 +76,11 @@ public :
 
 private:
 
-    std::string name_,file_;
-    unsigned int height_,width_,quality_;
+    std::string name_, file_;
+    unsigned int height_, width_, quality_, _subMat; 
 
     rgb* content_;
+    rgb ** _subContent;
     char * filePath_;
 
 };
