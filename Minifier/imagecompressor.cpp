@@ -29,11 +29,38 @@ for (int i=0; i<_N; i++){ // Création de la matrice de quantification 8x8 avec 
 }
 */
 
-ImageCompressor::ImageCompressor(
-        const std::string &n, const unsigned int &q, const std::string &f)
-        : name_{n}, quality_{q}, file_{f}
+ImageCompressor::ImageCompressor(const QString &n, const unsigned int &q, const QString &f)
 {
-    //TODO Get extension
+    this->setFilePath(f);
+    
+    QStringList path = f.split('\\');
+    QString fn = path.at(path.size()-1);
+    QString fp;
+    for(int i = 0; i < f.size()-1; i++)
+    {
+        fp += path.at(i);
+    }
+    this-->setOutputFilePath(fp + "\\" + n);
+      
+    QRegExp re_png("*.png", Qt::CaseInsensitive);
+    QRegExp re_jpg("*.jpg", Qt::CaseInsensitive);
+    QRegExp re_jpeg("*.jpeg", Qt::CaseInsensitive);
+    re_png.setPatternSyntax(QRegExp::Wildcard);
+    re_jpg.setPatternSyntax(QRegExp::Wildcard);
+    re_jpeg.setPatternSyntax(QRegExp::Wildcard);
+    
+    if(re_png.exactMatch(fn))
+    {
+        this->setFilePath(fp + convertPNG(fn));
+    }
+    if(re_jpg.exactMatch(fn) || re_jpeg.exactMatch(fn)){
+        this->loadPicture();
+        this->RGBToYCrCB();
+        this->Echant422();
+        this->Decoup8x8();
+        this->Quantify();
+        //TODO ....
+    }
 }
 
 ImageCompressor::~ImageCompressor()
@@ -277,7 +304,7 @@ void ImageCompressor::DCTInverse() /// OK
     }
 }
 
-void ImageCompressor::convertPNG()//PNG to JPEG
+void ImageCompressor::convertPNG(const QString &fileName)//PNG to JPEG
 {
 
 }
