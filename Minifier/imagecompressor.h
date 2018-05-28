@@ -19,11 +19,11 @@ along with Minifier.  If not, see <http://www.gnu.org/licenses/>.
 #ifndef IMAGECOMPRESS_IMAGECOMPRESSOR_HPP
 #define IMAGECOMPRESS_IMAGECOMPRESSOR_HPP 1
 
-#include <string>
+#include <QString>
+#include <QStringList>
 
 #include "utils.cpp"
 #include <cmath>
-
 
 namespace imageCompress{
 
@@ -31,7 +31,7 @@ class ImageCompressor{
 
 public :
 
-    ImageCompressor(const std::string &n, const unsigned int &q, const std::string &f);
+    ImageCompressor(const QString &n, const unsigned int &q, const QString &f);
 
     ImageCompressor(ImageCompressor &&) = delete;
     ImageCompressor(const ImageCompressor &) = default;
@@ -56,33 +56,36 @@ public :
     void DCTInverse();
 
     // Converte function
-    void convertPNG();
+    void convertPNG(const QString &fileName);
 
     // Accesseur
 
-    inline int getHeight();
-    inline int getWidth();
-    inline int getQuality();
-    inline std::string getName();
-    inline std::string getFile();
+    inline unsigned int getHeight();
+    inline unsigned int getWidth();
+    inline unsigned int getQuality();
+    inline QString getName();
+    inline QString getFile();
+    inline QString getOutputFilePath();
 
     // Mutateur
 
-    inline void setHeight( int h);
-    inline void setWidth( int w);
-    inline void setQuality( int q);
-    inline void setName( std::string n);
-    inline void setFile( std::string f );
+    inline void setHeight( const unsigned int &h);
+    inline void setWidth( const unsigned int &w);
+    inline void setQuality( const unsigned int &q);
+    inline void setName( const QString &name);
+    inline void setFilePath( const QString &filePath);
+    inline void setOutputFilePath( const QString &output);
 
 private:
 
-    std::string name_, file_;
-    unsigned int height_, width_, quality_, _subMat; 
-
-    rgb* content_;
+    QString _filePath, _outputFilePath;
+    unsigned int _height, _width, _quality, _subMatCount; 
+    
+    // Picture's matrix
+    rgb* _content;
+    
+    // Picture's 8*8 matrix
     rgb ** _subContent;
-    char * filePath_;
-
 };
 
 } // End imageCompress
