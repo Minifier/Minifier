@@ -73,7 +73,7 @@ ImageCompressor::~ImageCompressor()
  */
 void ImageCompressor::loadPicture()
 {
-    readJPEG(this->filePath_, &this->content_ , &this->width_, &this->height_);
+    readJPEG(this->_filePath, &this->_content , &this->_width, &this->_height);
 }
 
 /**
@@ -83,15 +83,15 @@ void ImageCompressor::RGBToYCrCb()
 {
     unsigned char R,G,B;
     unsigned int count = 0;
-    for(unsigned int i =0; i<=this->width_; i++){
-        count += this->width_;
-        for(unsigned int j =0; j<=this->height_; j++){
-            R = this->content_[count + j][0];
-            G = this->content_[count + j][1];
-            B = this->content_[count + j][2];
-            this->content_[count + j][0] = 0,299 * R + 0,587 * G + 0,114 * B;
-            this->content_[count + j][1] = 0,1687 * R - 0,3313 * G + 0,5 * B + 128;
-            this->content_[count + j][2] = 0,5 * R - 0,4187 * G - 0,0813 * B + 128;
+    for(unsigned int i =0; i<=this->getWidth(); i++){
+        count += this->getWidth();
+        for(unsigned int j =0; j<=this->getHeight(); j++){
+            R = this->_content[count + j][0];
+            G = this->_content[count + j][1];
+            B = this->_content[count + j][2];
+            this->_content[count + j][0] = 0,299 * R + 0,587 * G + 0,114 * B;
+            this->_content[count + j][1] = 0,1687 * R - 0,3313 * G + 0,5 * B + 128;
+            this->_content[count + j][2] = 0,5 * R - 0,4187 * G - 0,0813 * B + 128;
         }
     }
 }
@@ -103,15 +103,15 @@ void ImageCompressor::YCrCbToRGB()
 {
     unsigned char Y,Cb,Cr;
     unsigned int count = 0;
-    for(unsigned int i =0; i<=this->width_; i++){
-        count += this->width_;
-        for(unsigned int j =0; j<=this->height_; j++){
-            Y = this->content_[count + j][0];
-            Cb = this->content_[count + j][1];
-            Cr = this->content_[count + j][2];
-            this->content_[count + j][0] = Y + 1.402 * Cr;
-            this->content_[count + j][1] = Y - 0.344136 * Cb - 0.714136 * Cr;
-            this->content_[count + j][2] = Y + 1.772 * Yb;
+    for(unsigned int i =0; i<=this->getWidth(); i++){
+        count += this->getWidth();
+        for(unsigned int j =0; j<=this->getHeight(); j++){
+            Y = this->_content[count + j][0];
+            Cb = this->_content[count + j][1];
+            Cr = this->_content[count + j][2];
+            this->_content[count + j][0] = Y + 1.402 * Cr;
+            this->_content[count + j][1] = Y - 0.344136 * Cb - 0.714136 * Cr;
+            this->_content[count + j][2] = Y + 1.772 * Yb;
         }
     }
 }
@@ -122,18 +122,18 @@ void ImageCompressor::YCrCbToRGB()
 void ImageCompressor::Echant422()
 {
     unsigned int count = 0;
-    for(unsigned int i =0; i<=this->width_; i++){
-        count += this->width_;
-        for(unsigned int j =0; j<=this->height_; j++){
+    for(unsigned int i =0; i<=this->getWidth(); i++){
+        count += this->getWidth();
+        for(unsigned int j =0; j<=this->getHeight(); j++){
             if (i%2==1 && j%2==0){
-                this->content_[count + j][1] = 0;
+                this->_content[count + j][1] = 0;
             }
             else if(j%2==1 && i%2==0){
-                this->content_[count + j][2] = 0;
+                this->_content[count + j][2] = 0;
             }
             else if(j%2==1 && i%2==1){
-                this->content_[count + j][1] = 0;
-                this->content_[count + j][2] = 0;
+                this->_content[count + j][1] = 0;
+                this->_content[count + j][2] = 0;
             }
         }
     }
@@ -143,11 +143,11 @@ void ImageCompressor::Echant422()
 //Découpage de la matrice Initiale YCbCr en bloc de 8x8 pour le sous échantillonage pour permettre de gagner en temps de calcul.
 void ImageCompressor::Decoup8x8()
 {
-    unsigned int nW = this->weight_ / 8 ;
-    unsigned int nh = this->height_ / 8;
-    this->_subMat = nw * nh ;
+    unsigned int nW = this->getWidth() / 8 ;
+    unsigned int nh = this->getHeight() / 8;
+    this->_subMatCount = nw * nh ;
     
-    this->_subContent = new rgb[this->_subMat][64];
+    this->_subContent = new rgb[this->_subMatCount][64];
     
     unsigned int cursor = 0;
     
@@ -167,7 +167,7 @@ void ImageCompressor::Decoup8x8()
                 for(unsigned int l = 0; l < 8; l++)
                 {
                     y1++;
-                    this->_subContent[cursor][x1 + y1] = this->content_[x1 + y1];
+                    this->_subContent[cursor][x1 + y1] = this->_content[x1 + y1];
                 }
             }
         }
@@ -179,13 +179,13 @@ void ImageCompressor::Decoup8x8()
  */
 void ImageCompressor::Quantify()
 {    
-    for(unsigned int k = 0; k < this->_subMat; k++ )
+    for(unsigned int k = 0; k < this->_subMatCount; k++ )
     {
         for (int i =0; i < _N; i++){
             for (int j=0; j< _N; j++){
-                this->_subContent[k][i*_N +j][0]=this->_subContent[k][i*_N +j][0]/(1+(i+j+1)*this->quality_);
-                this->_subContent[k][i*_N +j][1]=this->_subContent[k][i*_N +j][1]/(1+(i+j+1)*this->quality_);
-                this->_subContent[k][i*_N +j][2]=this->_subContent[k][i*_N +j][2]/(1+(i+j+1)*this->quality_);
+                this->_subContent[k][i*_N +j][0]=this->_subContent[k][i*_N +j][0]/(1+(i+j+1)*this->getQuality());
+                this->_subContent[k][i*_N +j][1]=this->_subContent[k][i*_N +j][1]/(1+(i+j+1)*this->getQuality());
+                this->_subContent[k][i*_N +j][2]=this->_subContent[k][i*_N +j][2]/(1+(i+j+1)*this->getQuality());
             }
         }
     }
@@ -312,50 +312,55 @@ void ImageCompressor::convertPNG(const QString &fileName)//PNG to JPEG
 
 // Accesseur
 
-inline int ImageCompressor::getHeight()
+inline unsigned int ImageCompressor::getHeight()
 {
-    return this->height_;
+    return this->_height;
 }
 
-inline int ImageCompressor::getWidth()
+inline unsigned int ImageCompressor::getWidth()
 {
-    return this->width_;
+    return this->_width;
 }
 
-inline int ImageCompressor::getQuality()
+inline unsigned int ImageCompressor::getQuality()
 {
-    return this->quality_;
+    return this->_quality;
 }
-inline std::string ImageCompressor::getName()
+                                              
+inline QString ImageCompressor::fetFilePath()
 {
-    return this->name_;
+    return this->_filePath;
 }
-
-inline std::string ImageCompressor::getFile()
+                                              
+inline QString ImageCompressor::fetFilePath()
 {
-    return this->file_;
+    return this->_outputFilePath;
 }
-
 
 // Mutateur
 
-inline void ImageCompressor::setHeight( int h)
+inline void ImageCompressor::setHeight( const unsigned int &h)
 {
-    this->height_ = h;
+    this->_height = h;
 }
 
-inline void ImageCompressor::setWidth( int w)
+inline void ImageCompressor::setWidth( const unsigned int &w)
 {
-    this->width_ = w;
+    this->_width = w;
 }
 }
 
-inline void ImageCompressor::setQuality( int q)
+inline void ImageCompressor::setQuality(const unsigned int &q)
 {
-    this->quality_ = q;
+    this->_quality = q;
 }
 
-inline void ImageCompressor::setFile( std::string f )
+inline void ImageCompressor::setFilePath( const QString &filePath)
 {
-    this->file = utils.getFile(Filepath)
+    this->_filePath = filePath;
+}
+                                              
+inline void ImageCompressor::setFilePath( const QString &output)
+{
+    this->_outputFilePath = output;
 }
