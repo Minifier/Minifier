@@ -15,6 +15,31 @@ LoadProfil::~LoadProfil()
     delete ui;
 }
 
+/**
+ * @brief LoadProfil::setCompressor set pointer to codes_compressor
+ * @param c code_compressor pointer
+ */
+void LoadProfil::setCompressor( code_compressor::CodesCompressor * c)
+{
+    this->compressor = c;
+}
+
+/**
+ * @brief LoadProfil::setProfils use to clear and regenerate profiles'list
+ */
+void LoadProfil::setProfils()
+{
+    if(this->compressor != nullptr)
+    {
+        ui->listProfils->clear();
+        for( int i = 0; i < this->compressor->_profilsName.size() ; i++)
+        {
+            new QListWidgetItem(this->compressor->_profilsName.at(i), ui->listProfils);
+        }
+    }
+}
+
+
 void LoadProfil::on_listProfils_itemClicked(QListWidgetItem *item)
 {
     this->selected = item;
@@ -33,23 +58,6 @@ void LoadProfil::on_buttonBox_accepted()
                 this->compressor->launchCompressorByIndex(i);
                 break;
             }
-        }
-    }
-}
-
-void LoadProfil::setCompressor( code_compressor::CodesCompressor * c)
-{
-    this->compressor = c;
-}
-
-void LoadProfil::setProfils()
-{
-    if(this->compressor != nullptr)
-    {
-        ui->listProfils->clear();
-        for( int i = 0; i < this->compressor->_profilsName.size() ; i++)
-        {
-            new QListWidgetItem(this->compressor->_profilsName.at(i), ui->listProfils);
         }
     }
 }

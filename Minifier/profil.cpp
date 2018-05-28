@@ -81,7 +81,7 @@ bool code_compressor::Profil::save(const QString &cfgName)
 {
     QStringList ctn;
     ctn << cfgName << this->fileName();
-    return writeEndFile((ExePath() + PROFIL_FILE ), ctn);
+    return writeEndFile((ExePath() + "profil.txt" ), ctn);
 }
 
 /**

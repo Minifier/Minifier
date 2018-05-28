@@ -40,7 +40,6 @@ HEADERS += \
     compressfile.h \
     profil.h \
     utils.h \
-    config.h \
     loadprofil.h \
     manageprofil.h \
     imagecompressor.h

@@ -39,7 +39,19 @@ public :
     ImageCompressor &operator=(const ImageCompressor &) = default;
     ~ImageCompressor();
 
+    /**
+     * @brief ImageCompressor::canConvert
+     * @param extension
+     * @return True|False if extension is available to convert
+     */
     bool canConvert(const QString &extension);
+
+    /**
+     * @brief convert algo to create and launch convertissor and compressor
+     * @param filePath input filePath
+     * @param fileName output File's Name
+     * @param quality [0-100] % quality for compression (default 70)
+     */
     void convert(const QString &filePath , QString &fileName, int quality);
 
 private:

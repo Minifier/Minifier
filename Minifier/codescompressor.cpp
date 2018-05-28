@@ -115,7 +115,7 @@ void code_compressor::CodesCompressor::stop()
 
 /**
  * @brief loadProfils load all profil from profil.txt
- * @return true|false file exist
+ * @return true|false one or more files has been loaded ?
  */
 bool code_compressor::CodesCompressor::loadProfils()
 {
@@ -232,19 +232,19 @@ QStringList code_compressor::CodesCompressor::getProfilInfoByIndex(const int &i)
 }
 
 /**
- * @brief addCompressorFile use to add CompressFile to files
- * @param filePath way to access to the file
- */
-void code_compressor::CodesCompressor::addCompressorFile(const QString &filePath)
-{
-    this->_files.push_back(new code_compressor::CompressFile(filePath));
-}
-
-/**
  * @brief running use to know if compressors are running
  * @return true|false running state
  */
 bool code_compressor::CodesCompressor::running()
 {
     return this->_state;
+}
+
+/**
+ * @brief addCompressorFile use to add CompressFile to files
+ * @param filePath way to access to the file
+ */
+void code_compressor::CodesCompressor::addCompressorFile(const QString &filePath)
+{
+    this->_files.push_back(new code_compressor::CompressFile(filePath));
 }

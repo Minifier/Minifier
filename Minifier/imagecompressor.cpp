@@ -72,6 +72,12 @@ static inline QString makeCmd(const QString &exe, const QString &filePath, const
     return "cmd /c \"" + ExePath() + "convert\\" + exe +"2jpg.exe -i " + filePath + " -q -filename-mask=\"" + fileName + ".jpg\" --jpg-quality=" + QString::number(quality) + "\"";
 }
 
+/**
+ * @brief convert algo to create and launch convertissor and compressor
+ * @param filePath input filePath
+ * @param fileName output File's Name
+ * @param quality [0-100] % quality for compression (default 70)
+ */
 void image_compressor::ImageCompressor::convert(const QString &filePath , QString &fileName, int quality)
 {
     if(fileName.isEmpty())

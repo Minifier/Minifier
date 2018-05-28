@@ -19,7 +19,7 @@ along with Minifier.  If not, see <http://www.gnu.org/licenses/>.
 #include "compressfile.h"
 
 /**
- * @brief CompressCallback callback to launch cssmin.exe each time file change
+ * @brief CompressCallback callback to launch (cssmin|jsmin).exe each time file change
  * @return 0
  */
 UINT code_compressor::CompressFile::CompressCallback()

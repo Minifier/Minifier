@@ -32,7 +32,6 @@ along with Minifier.  If not, see <http://www.gnu.org/licenses/>.
 #include <vector>
 
 #include "utils.h"
-#include "config.h"
 
 namespace code_compressor {
 

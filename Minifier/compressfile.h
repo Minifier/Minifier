@@ -25,7 +25,6 @@ along with Minifier.  If not, see <http://www.gnu.org/licenses/>.
 #include <QProcess>
 
 #include "utils.h"
-#include "config.h"
 
 namespace code_compressor{
 
@@ -40,20 +39,32 @@ namespace code_compressor{
         CompressFile &operator=(const CompressFile &) = default;
         ~CompressFile();
 
+        /**
+         * @brief compress add file path to file watcher and launch compress callback
+         */
         void compress();
+
+        /**
+         * @brief stop remove file path from file watcher
+         */
         void stop();
 
-        // Accesseur
+        /* Accesseur */
         inline QString getFilePath();
         inline QString getOutputFile();
 
-        // Mutateur
+        /* Mutateur */
         inline void setFilePath(const QString &filePath);
         inline void setOutputFile(const QString &output);
         
+        /* public var */
         QFileSystemWatcher* fileWatch;
 
     public slots:
+        /**
+         * @brief CompressCallback callback to launch (cssmin|jsmin).exe each time file change
+         * @return 0
+         */
         UINT CompressCallback();
 
     protected:

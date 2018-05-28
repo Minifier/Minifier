@@ -41,7 +41,15 @@ public:
     explicit LoadProfil(QWidget *parent = 0);
     ~LoadProfil();
 
+    /**
+     * @brief LoadProfil::setCompressor set pointer to codes_compressor
+     * @param c code_compressor pointer
+     */
     void setCompressor( code_compressor::CodesCompressor * c);
+
+    /**
+     * @brief LoadProfil::setProfils use to clear and regenerate profiles'list
+     */
     void setProfils();
 
 private slots:

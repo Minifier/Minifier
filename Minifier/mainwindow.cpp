@@ -107,6 +107,9 @@ void MainWindow::setConfigInfo(const QStringList &info)
     QMessageBox::information(this,"Chargement du profil","Le profil a bien été chargé.");
 }
 
+/**
+ * @brief setupSystemTray setup system tray for windows
+ */
 void MainWindow::setupSystemTray()
 {
     this->_sysTray = new QSystemTrayIcon(this);
