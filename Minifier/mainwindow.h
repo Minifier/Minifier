@@ -33,6 +33,8 @@ along with Minifier.  If not, see <http://www.gnu.org/licenses/>.
 #include <QCloseEvent>
 
 #include "codescompressor.h"
+#include "imagecompressor.h"
+
 #include "loadprofil.h"
 #include "manageprofil.h"
 
@@ -111,6 +113,8 @@ private slots:
      */
     void iconActivated(QSystemTrayIcon::ActivationReason reason);
 
+    void on_launchImage_clicked();
+
 private:
     Ui::MainWindow *ui;
     LoadProfil p;
@@ -125,6 +129,7 @@ private:
     QAction * _start, * _stop, * _exit, * _open;
 
     code_compressor::CodesCompressor * codeCompressor;
+    image_compressor::ImageCompressor * imageCompressor;
 };
 
 #endif // MAINWINDOW_H

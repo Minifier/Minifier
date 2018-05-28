@@ -23,7 +23,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 
-SOURCES += \
+SOURCES = \
         main.cpp \
         mainwindow.cpp \
     codescompressor.cpp \
@@ -43,24 +43,6 @@ HEADERS += \
     config.h \
     loadprofil.h \
     manageprofil.h \
-    CImg.h \
-    plugins/add_fileformat.h \
-    plugins/bayer.h \
-    plugins/chlpca.h \
-    plugins/cvMat.h \
-    plugins/draw_gradient.h \
-    plugins/inpaint.h \
-    plugins/ipl.h \
-    plugins/ipl_alt.h \
-    plugins/jpeg_buffer.h \
-    plugins/loop_macros.h \
-    plugins/matlab.h \
-    plugins/nlmeans.h \
-    plugins/skeleton.h \
-    plugins/tiff_stream.h \
-    plugins/tinymatwriter.h \
-    plugins/vrml.h \
-    plugins/vtk.h \
     imagecompressor.h
 
 FORMS += \
@@ -72,8 +54,3 @@ RESOURCES += \
     pics.qrc
 
 RC_FILE += minifier.rc
-
-win32: LIBS += -L$$PWD/./ -lgdi32
-
-INCLUDEPATH += $$PWD/.
-DEPENDPATH += $$PWD/.

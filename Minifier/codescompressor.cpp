@@ -21,7 +21,6 @@ along with Minifier.  If not, see <http://www.gnu.org/licenses/>.
 *******************************************************************/
 
 #include "codescompressor.h"
-#include <iostream>
 
 template<typename T, typename... Args>
 std::unique_ptr<T> make_unique(Args&&... args) {

@@ -15,6 +15,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     // Create an empty codes compressor manager
     this->codeCompressor = new code_compressor::CodesCompressor();
+    this->imageCompressor = new image_compressor::ImageCompressor();
 
     // Set link to the compressor for manageProfil (m) and loadProfil (p) ui
     p.setCompressor(this->codeCompressor);
@@ -333,7 +334,10 @@ void MainWindow::on_actionStop_triggered()
 
 void MainWindow::on_loadImg_clicked()
 {
-    this->img_path = QFileDialog::getOpenFileName(this, tr("Charger une image"), "C:\\" , tr("Fichiers images (*.png *.jpg *.bmp)"));
+    QString filter = "Fichiers images (*.png *.jpg *.bmp);;Fichiers raw (*.3fr *.arw *.srf *.sr2 *.bay *.crw *.cr2 *.cap *.iiq *.eip *.dcs *.dcr *.drf *.k25 *.kdc *.dng *.erf *.fff *.mef *.mos *.mrw *.nef *.nrw *.orf *.ptx *.pref *.pxn *.r3d *.raf *.raw *.rw2 *.rwl *.rwz *.x3f);;Fichiers png (*.png);;Fichiers tiff (*.tif *.tiff);;Fichiers psd (*.psd);;Fichiers bmp (*.bpm);;Fichiers gif (*.gif);;Fichiers ico (*.ico)";
+    this->img_path = QFileDialog::getOpenFileName(this, tr("Charger une image"), "C:\\" , filter);
+    QString ext = this->img_path.split(".").last();
+    this->imageCompressor->canConvert(ext);
 }
 
 void MainWindow::on_qualitySlider_valueChanged(int value)
@@ -359,4 +363,23 @@ void MainWindow::iconActivated(QSystemTrayIcon::ActivationReason reason)
     default:
         break;
     }
+}
+
+void MainWindow::on_launchImage_clicked()
+{
+    // Get fileName
+    QString fileName = ui->fileName->toPlainText().simplified();
+
+    // Kill extension if user enter ".jpg"
+    QStringList c = fileName.split('.');
+    int sl = c.size();
+    if (sl != 1) {
+        QString path = "";
+        for (int i = 0; i < sl - 1; i++) {
+            fileName += c.at(i);
+        }
+    }
+
+    this->imageCompressor->convert(this->img_path, fileName, ui->qualitySlider->value());
+
 }

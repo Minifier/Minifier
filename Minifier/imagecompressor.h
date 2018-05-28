@@ -19,68 +19,32 @@ along with Minifier.  If not, see <http://www.gnu.org/licenses/>.
 #ifndef IMAGECOMPRESS_IMAGECOMPRESSOR_HPP
 #define IMAGECOMPRESS_IMAGECOMPRESSOR_HPP 1
 
-#include <string>
+#include <QString>
+#include <QStringList>
+#include <QProcess>
 
-#include "utils.cpp"
-#include <cmath>
+#include "utils.h"
 
-
-namespace imageCompress{
+namespace image_compressor{
 
 class ImageCompressor{
 
 public :
 
-    ImageCompressor(const std::string &n, const unsigned int &q, const std::string &f);
+    ImageCompressor();
 
-    ImageCompressor(ImageCompressor &&) = default;
+    ImageCompressor(ImageCompressor &&) = delete;
     ImageCompressor(const ImageCompressor &) = default;
-    ImageCompressor &operator=(ImageCompressor &&) = default;
+    ImageCompressor &operator=(ImageCompressor &&) = delete;
     ImageCompressor &operator=(const ImageCompressor &) = default;
     ~ImageCompressor();
 
-    // Load the picture
-    void loadPicture();
-
-    void RGBToYCrCb();
-    void YCbCrToRGB();
-    void Echant422();
-    void Decoup8x8();
-    void Quantify();
-    void ZigZag();
-    void DCT();
-    void Huffman();
-    void resize();
-    void HuffmanInverse();
-    void unquantify();
-    void DCTInverse();
-
-    // Converte function
-    void convertPNG();
-
-    // Accesseur
-
-    inline int getHeight();
-    inline int getWidth();
-    inline int getQuality();
-    inline std::string getName();
-    inline std::string getFile();
-
-    // Mutateur
-
-    inline void setHeight( int h);
-    inline void setWidth( int w);
-    inline void setQuality( int q);
-    inline void setName( std::string n);
-    inline void setFile( std::string f );
+    bool canConvert(const QString &extension);
+    void convert(const QString &filePath , QString &fileName, int quality);
 
 private:
-
-    std::string name_,file_;
-    unsigned int height_,width_,quality_;
-
-    rgb* content_;
-    char * filePath_;
+    QStringList _extList, _rawList, _pngList, _tifList, _psdList, _bmpList, _gifList, _icoList;
+    QString _cmd;
 
 };
 

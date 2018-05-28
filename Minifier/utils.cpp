@@ -23,33 +23,6 @@ along with Minifier.  If not, see <http://www.gnu.org/licenses/>.
 #include "utils.h"
 
 /**
- *@brief readJPEG function use to read a jpeg file
- *@param filePath file file's path
- *@param res list of rgb
- *@param w weight of picture
- *@param h height of picture
- */
-void readJPEG(const char* &filePath, rgb *& res , unsigned int * w, unsigned int * h)
-{
-    cimg_library::CImg<unsigned char> src(filePath);
-    *w = src.width();
-    *h = src.height();
-    res = new rgb[*w * *h];
-    rgb dist;
-    unsigned int t = 0;
-    for (unsigned int i = 0; i < *w; i++)
-    {
-        t += *w;
-        for (unsigned int j = 0; j < *h; j++)
-        {
-            to_rgb(src(i, j, 0, 0), src(i, j, 0, 1), src(i, j, 0, 2), &dist);
-            res[t + *h] = dist;
-        }
-    }
-    src.clear();
-}
-
-/**
  * @brief explode explode a string by delim
  * @param s string to explode
  * @param delim char for explode
