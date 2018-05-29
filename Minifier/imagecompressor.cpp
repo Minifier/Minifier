@@ -69,7 +69,8 @@ bool static inList(const QString &filePath, const QStringList &list)
  */
 static inline QString makeCmd(const QString &exe, const QString &filePath, const QString &fileName, const int &quality)
 {
-    return "cmd /c \"" + ExePath() + "convert\\" + exe +"2jpg.exe -i " + filePath + " -q -filename-mask=\"" + fileName + ".jpg\" --jpg-quality=" + QString::number(quality) + "\"";
+    QString cmd = "cmd /c \"\"" + ExePath() + "convert\\" + exe +"2jpg.exe -i " + filePath + " -q --filename-mask=\"" + fileName + ".%ext%\" --jpg-quality=" + QString::number(quality) + "\"\"";
+    return cmd;
 }
 
 /**
@@ -80,28 +81,37 @@ static inline QString makeCmd(const QString &exe, const QString &filePath, const
  */
 void image_compressor::ImageCompressor::convert(const QString &filePath , QString &fileName, int quality)
 {
+    bool no_name = false;
     if(fileName.isEmpty())
     {
         fileName = "%filename%";
+        no_name = true;
     }
 
     if(quality == 0)
     {
         quality = 100;
     }
-
     QRegExp re_jpg("*.jpg", Qt::CaseInsensitive);
     re_jpg.setPatternSyntax(QRegExp::Wildcard);
-
-    if(re_jpg.exactMatch(filePath))
+    if(re_jpg.exactMatch(filePath) == true)
     {
-        QStringList path = filePath.split('\\');
-        QString fp;
-        for(int i = 0; i < filePath.size()-1; i++)
+        if(!no_name)
         {
-            fp += path.at(i);
+            QStringList path = filePath.split('\\');
+            QString fp;
+            for(int i = 0; i < filePath.size()-1; i++)
+            {
+                fp += path.at(i);
+                std::cout << fp.toUtf8().constData() << std::endl;
+            }
+            fileName = fp + fileName + ".jpg";
         }
-        this->_cmd = "cmd /c \"" + ExePath() + "convert.exe -strip -interlace Plane -gaussian-blur 0.05 -quality " + quality + "% "+ filePath + fp + fileName +".jpg\"";
+        else{
+            fileName = filePath;
+        }
+
+        this->_cmd = "cmd /c \"\"" + ExePath() + "convert -strip -interlace Plane -quality " + QString::number(quality) + "% "+ filePath +" " + fileName +"\"\"";
 
     } else if( inList(filePath, this->_rawList )) {
         this->_cmd = makeCmd("raw", filePath, fileName, quality);
@@ -120,5 +130,6 @@ void image_compressor::ImageCompressor::convert(const QString &filePath , QStrin
     }
 
     QProcess::startDetached(this->_cmd);
+    std::cout << this->_cmd.toUtf8().constData() << std::endl;
     this->_cmd = "";
 }

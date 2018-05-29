@@ -120,7 +120,7 @@ void code_compressor::CodesCompressor::stop()
 bool code_compressor::CodesCompressor::loadProfils()
 {
     bool retval = false;
-    QStringList p = readFile((ExePath() + PROFIL_FILE ));
+    QStringList p = readFile((ExePath() + "profil.txt" ));
     for(int i = 0; i < p.size(); i+=3)
     {
         this->_profilsName << p.at(i);
@@ -174,7 +174,7 @@ void code_compressor::CodesCompressor::deleteProfilByIndex(const int &index)
     for(int i = 0; i < (int)(this->_profils.size()) ; i++){
         ctn << this->_profils[i]->getCfgName() << this->_profils[i]->fileName();
     }
-    writeFile((ExePath() + PROFIL_FILE ), ctn);
+    writeFile((ExePath() + "profil.txt" ), ctn);
 }
 
 /**
@@ -190,7 +190,7 @@ void code_compressor::CodesCompressor::renameProfilByIndex(const int &index, con
     for(int i = 0; i < (int)(this->_profils.size()) ; i++){
         ctn << this->_profils[i]->getCfgName() << this->_profils[i]->fileName();
     }
-    writeFile((ExePath() + PROFIL_FILE ), ctn);
+    writeFile((ExePath() + "profil.txt" ), ctn);
 }
 
 /**
