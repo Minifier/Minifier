@@ -21,8 +21,11 @@ along with Minifier.  If not, see <http://www.gnu.org/licenses/>.
 
 #include <QObject>
 #include <QString>
+#include <QStringList>
 #include <Qfilesystemwatcher>
+#include <QCoreApplication>
 #include <QProcess>
+#include <QFile>
 
 #include "utils.h"
 
@@ -68,7 +71,11 @@ namespace code_compressor{
         UINT CompressCallback();
 
     protected:
+        QFile bat;
+        QString bat_name;
+
         QString _filePath, _outputFile, _cmd;
+        QStringList _cmdArg;
     };
 
     /*******************************************/

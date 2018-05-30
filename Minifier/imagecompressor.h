@@ -46,6 +46,8 @@ public :
      */
     bool canConvert(const QString &extension);
 
+    inline QString makeCmd(const QString &exe, const QString &filePath, const QString &fileName, const int &quality);
+
     /**
      * @brief convert algo to create and launch convertissor and compressor
      * @param filePath input filePath

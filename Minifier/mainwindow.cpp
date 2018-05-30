@@ -33,6 +33,13 @@ MainWindow::MainWindow(QWidget *parent) :
 MainWindow::~MainWindow()
 {
     delete ui;
+    // Clear tmp directory of files create during code compression
+    QProcess p;
+    p.start(ExePath() + "clear_tmp.bat");
+    if( p.waitForFinished() )
+    {
+        return;
+    }
 }
 
 /**
@@ -339,8 +346,6 @@ void MainWindow::on_loadImg_clicked()
 {
     QString filter = "Fichiers images (*.png *.jpg *.bmp);;Fichiers raw (*.3fr *.arw *.srf *.sr2 *.bay *.crw *.cr2 *.cap *.iiq *.eip *.dcs *.dcr *.drf *.k25 *.kdc *.dng *.erf *.fff *.mef *.mos *.mrw *.nef *.nrw *.orf *.ptx *.pref *.pxn *.r3d *.raf *.raw *.rw2 *.rwl *.rwz *.x3f);;Fichiers png (*.png);;Fichiers tiff (*.tif *.tiff);;Fichiers psd (*.psd);;Fichiers bmp (*.bpm);;Fichiers gif (*.gif);;Fichiers ico (*.ico)";
     this->img_path = QFileDialog::getOpenFileName(this, tr("Charger une image"), "C:\\" , filter);
-    QString ext = this->img_path.split(".").last();
-    this->imageCompressor->canConvert(ext);
 }
 
 void MainWindow::on_qualitySlider_valueChanged(int value)
@@ -371,18 +376,30 @@ void MainWindow::iconActivated(QSystemTrayIcon::ActivationReason reason)
 void MainWindow::on_launchImage_clicked()
 {
     // Get fileName
-    QString fileName = ui->fileName->toPlainText().simplified();
+    QString fileName = ui->fileName->text().simplified();
 
+
+    QRegExp re_1("jpeg", Qt::CaseInsensitive);
+    QRegExp re_2("jpg", Qt::CaseInsensitive);
+    re_1.setPatternSyntax(QRegExp::Wildcard);
+    re_2.setPatternSyntax(QRegExp::Wildcard);
     // Kill extension if user enter ".jpg"
     QStringList c = fileName.split('.');
-    int sl = c.size();
-    if (sl != 1) {
-        QString path = "";
-        for (int i = 0; i < sl - 1; i++) {
-            fileName += c.at(i);
+    while(re_1.exactMatch(c.last()) or re_2.exactMatch(c.last()))
+    {
+        QStringList path;
+        int sl = c.size();
+        if (sl != 1) {
+            path.clear();
+            for (int i = 0; i < sl - 1; i++) {
+                path << c.at(i);
+            }
+            fileName = path.join('.');
         }
+        c = fileName.split('.');
     }
 
     this->imageCompressor->convert(this->img_path, fileName, ui->qualitySlider->value());
+    QMessageBox::information(this,"Compression d'image","L'image " + this->img_path.split('/').last() + " a été compressé.");
 
 }

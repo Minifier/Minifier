@@ -23,6 +23,39 @@ along with Minifier.  If not, see <http://www.gnu.org/licenses/>.
 #include "utils.h"
 
 /**
+ * @brief cmdCheck put " " around whitespace in path
+ * @param cmd list of path
+ */
+void cmdCheck(QStringList *cmd)
+{
+    QStringList str, tmp;
+    QString copy;
+
+    // For each path in cmd
+    for(int j = 0; j < (*cmd).size(); j++)
+    {
+        // Clear tmp use to build the new path with " "
+        tmp.clear();
+
+        // Split path by directory
+        str = (*cmd).at(j).split('/');
+
+        // For each directory in the path
+        for(int i = 0; i < str.size(); i++)
+        {
+            // Check if the directory name contains whitespace
+            if(str.at(i).contains(' '))
+                tmp << "\"" + str.at(i) + "\"";
+            else
+                tmp << str.at(i);
+        }
+
+        // Join each directory to build the path and replace it in cmd
+        (*cmd).replace(j,tmp.join('/'));
+    }
+}
+
+/**
  * @brief explode explode a string by delim
  * @param s string to explode
  * @param delim char for explode
@@ -267,8 +300,12 @@ int getFileSize(const std::string &fileName)
  */
 QString ExePath() {
     TCHAR buffer[MAX_PATH];
+
+    // Retrieves the fully qualified path, with null retrieves the fully qualified path of the exe of current process
     GetModuleFileName(NULL, buffer, MAX_PATH);
+
+    // Rewrite buffer into string and after into QString, return this QString after replace '\' by '/'
     std::wstring arr_w( buffer );
     std::string::size_type pos = std::string(arr_w.begin(), arr_w.end()).find_last_of("\\/");
-    return QString::fromStdString(std::string(arr_w.begin(), arr_w.end()).substr(0, pos) + '\\' );
+    return QString::fromStdString(std::string(arr_w.begin(), arr_w.end()).substr(0, pos) + '\\' ).replace('\\','/');
 }

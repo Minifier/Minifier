@@ -31,12 +31,15 @@ along with Minifier.  If not, see <http://www.gnu.org/licenses/>.
 #include <QAction>
 #include <QMenu>
 #include <QCloseEvent>
+#include <QProcess>
 
 #include "codescompressor.h"
 #include "imagecompressor.h"
 
 #include "loadprofil.h"
 #include "manageprofil.h"
+
+#include "utils.h"
 
 namespace Ui {
 class MainWindow;

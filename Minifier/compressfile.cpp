@@ -24,8 +24,9 @@ along with Minifier.  If not, see <http://www.gnu.org/licenses/>.
  */
 UINT code_compressor::CompressFile::CompressCallback()
 {
-    /* Copyright (c) 2010  (www.ryanday.org) */
-    QProcess::startDetached(this->_cmd);
+    /* Copyright (c) 2010  (www.ryanday.org) cssmin.c */
+    /* Copyright (c) 2002 Douglas Crockford  (www.crockford.com) jsmin.c */
+    QProcess::startDetached(bat_name);
     return 0;
 }
 
@@ -36,11 +37,14 @@ UINT code_compressor::CompressFile::CompressCallback()
 code_compressor::CompressFile::CompressFile(const QString &filePath)
 {
     this->setFilePath(filePath);
+
     // Define filePath and outPutFilePath
     QStringList c = filePath.split('.');
     int sl = c.size();
     if (sl == 2) {
         this->setOutputFile(c.at(0) + ".min."+ c.at(sl-1));
+        QString tmp = (c.at(0));
+        this->bat_name = tmp.split('/').last() + ".bat";
     }
     else {
         QString path = "";
@@ -48,9 +52,28 @@ code_compressor::CompressFile::CompressFile(const QString &filePath)
             path += c.at(i);
         }
         this->setOutputFile(path + ".min." + c.at(sl-1));
+        this->bat_name = path.split('/').last() + ".bat";
     }
-    
-    this->_cmd = "cmd /c \"" + ExePath() + c.at(sl-1) + "min.exe" + " <" + this->_filePath + "> " + this->_outputFile + "\"";
+    if(this->bat_name.contains(' ')) this->bat_name.replace(' ', '_');
+    this->bat_name = ExePath() + "tmp/" + this->bat_name;
+    // Struct : default_app_path/ + %extension% + min.exe
+    this->_cmd =ExePath()  + c.at(sl-1) + "min.exe";
+
+    // Need to detect whitespace in filePath
+    QStringList cmd_to_check;
+    cmd_to_check << this->_cmd;
+    cmdCheck(&cmd_to_check);
+    this->_cmd = cmd_to_check.at(0) + " <\"" + this->_filePath + "\"> \"" + this->_outputFile + "\"";
+
+    // Set bat's name
+    this->bat.setFileName(this->bat_name);
+
+    // Write cmd to compress (js|css) in bat file
+    if(!this->bat.open(QIODevice::WriteOnly) )
+       return;
+
+    this->bat.write(this->_cmd.toUtf8().constData());
+    this->bat.close();
 
     // Create file watcher
     fileWatch = new QFileSystemWatcher(this);
@@ -64,6 +87,9 @@ code_compressor::CompressFile::CompressFile(const QString &filePath)
 code_compressor::CompressFile::~CompressFile()
 {
     this->stop();
+
+    // Remove bat file create for compression
+    this->bat.remove();
 }
 
 /**
@@ -71,8 +97,8 @@ code_compressor::CompressFile::~CompressFile()
  */
 void code_compressor::CompressFile::compress()
 {
-    fileWatch->addPath(this->_filePath);
     this->CompressCallback();
+    fileWatch->addPath(this->_filePath);
 }
 
 /**

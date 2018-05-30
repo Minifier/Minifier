@@ -25,6 +25,7 @@ along with Minifier.  If not, see <http://www.gnu.org/licenses/>.
 
 #include <QString>
 #include <QStringList>
+#include <QRegExp>
 
 #include <windows.h>
 #include <string>
@@ -34,6 +35,12 @@ along with Minifier.  If not, see <http://www.gnu.org/licenses/>.
 #include <iostream>
 #include <fstream>
 #include <stdio.h>
+
+/**
+ * @brief cmdCheck put " " around whitespace in path
+ * @param cmd list of path
+ */
+void cmdCheck(QStringList *cmd);
 
 /**
  * @brief explode explode a string by delim
