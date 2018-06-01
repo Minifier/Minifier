@@ -29,7 +29,6 @@ along with Minifier.  If not, see <http://www.gnu.org/licenses/>.
 void cmdCheck(QStringList *cmd)
 {
     QStringList str, tmp;
-    QString copy;
 
     // For each path in cmd
     for(int j = 0; j < (*cmd).size(); j++)
