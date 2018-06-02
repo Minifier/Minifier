@@ -33,9 +33,7 @@ La seconde fonctionnalité de notre application sera de pouvoir compresser et co
 4. Lancer le fichier
 5. Vous pouvez utiliser le logiciel Minifier.
 
-```
 Merci d'indiquer la version de votre système d'exploitation dans la catégorie [Issues](https://github.com/Minifier/Minifier/issues) car le logiciel n'a peut-être testé que sur Ubuntu
-```
 
 ### Mac OS
 
