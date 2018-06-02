@@ -15,6 +15,32 @@ Le but de cette option du logiciel est donc de supprimer automatiquement tous le
 
 La seconde fonctionnalité de notre application sera de pouvoir compresser et convertir rapidement des images. Le fait est que le référencement web se fait toujours en fonction de la vitesse de chargement de chaque page web. Une photo en format PNG faisant 20 Mo provoquera un chargement beaucoup plus long que la même photo compressée en format JPG aux bonnes dimensions faisant 500 ko.
 
+## Installation
+
+### Windows
+
+1. Rendez-vous dans dans les ["releases"](https://github.com/Minifier/Minifier/releases) du répertoire github
+2. Choisissez la dernière version disponible pour Windows.
+3. Télécharger l'installeur ( setup-minifier-windows.exe )
+4. Lancer l'installeur sur votre machine.
+5. Vous pouvez utiliser le logiciel Minifier.
+
+### Linux
+
+1. Rendez-vous dans dans les ["releases"](https://github.com/Minifier/Minifier/releases) du répertoire github
+2. Choisissez la dernière version disponible pour Linux.
+3. Télécharger le fichier Minifier
+4. Lancer le fichier
+5. Vous pouvez utiliser le logiciel Minifier.
+
+```
+Merci d'indiquer la version de votre système d'exploitation dans la catégorie [Issues](https://github.com/Minifier/Minifier/issues) car le logiciel n'a peut-être testé que sur Ubuntu
+```
+
+### Mac OS
+
+Aucune version n'est disponible pour le moment pour les clients Mac OS
+
 ## Porteur du projet
 
 Le projet est réaliser par les personnes suivantes:
