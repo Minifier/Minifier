@@ -124,6 +124,11 @@ namespace code_compressor {
          */
         void launchCompressorByIndex(const int &i);
 
+        /** 
+         * @brief  return profil info by index
+         * @param  &i: index
+         * @retval QStringList { Path to JS directory ; Path to CSS directory }
+         */
         QStringList getProfilInfoByIndex(const int &i);
 
         /**

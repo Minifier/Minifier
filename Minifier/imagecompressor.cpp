@@ -80,6 +80,11 @@ inline QString image_compressor::ImageCompressor::makeCmd(const QString &exe, co
     return cmd + " " + cmdArg.join(' ');
 }
 
+/** 
+ * @brief  return filePath with fileName
+ * @param  &filePath: filePath with fileName
+ * @retval filePath without fileName
+ */
 static QString getFilePath(const QString &filePath)
 {
     QStringList path = filePath.split('/');
@@ -120,17 +125,20 @@ void image_compressor::ImageCompressor::convert(const QString &filePath , QStrin
             // Struct : %path_to_input_directory% + / + %output_file_name% + .jpg
             fileName = getFilePath(filePath) + "/" + fileName + ".jpg";
         }
-        else{
-            fileName = filePath;
-        }
 
         this->_cmd = ExePath() + "convert.exe";
+
         QStringList cmd_to_test ;
         cmd_to_test.clear();
         cmd_to_test << this->_cmd << filePath << fileName;
+        
         cmdCheck(&cmd_to_test);
+        
         QStringList cmdArg;
+        // Argument use by convert.exe 
         cmdArg << "-strip" << "-interlace Plane" << "-quality " + QString::number(quality) + "%" << cmd_to_test.at(1) << cmd_to_test.at(2);
+
+        // Build cmd / Sturct : %exe% + %cmd argument%
         this->_cmd = cmd_to_test.at(0) + " " + cmdArg.join(' ');
 
     } else if( inList(filePath, this->_rawList )) {
@@ -149,7 +157,9 @@ void image_compressor::ImageCompressor::convert(const QString &filePath , QStrin
         this->_cmd = makeCmd("ico", filePath, fileName, quality);
     }
 
+    // Launch cmd
     QProcess::startDetached(this->_cmd);
 
+    // Clear cmd to avoid error
     this->_cmd = "";
 }

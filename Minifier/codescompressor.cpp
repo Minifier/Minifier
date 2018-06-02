@@ -22,6 +22,10 @@ along with Minifier.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "codescompressor.h"
 
+/** 
+ * @brief  Implementation of make_unique from cpprefrence.com
+ * @note   http://en.cppreference.com/w/cpp/memory/unique_ptr/make_unique
+ */
 template<typename T, typename... Args>
 std::unique_ptr<T> make_unique(Args&&... args) {
     return std::unique_ptr<T>(new T(std::forward<Args>(args)...));
@@ -120,10 +124,13 @@ void code_compressor::CodesCompressor::stop()
 bool code_compressor::CodesCompressor::loadProfils()
 {
     bool retval = false;
+    // ReadFile return a QStringList compound by { Profil name ; Path to js directory ; Path to css directory }
     QStringList p = readFile((ExePath() + "profil.txt" ));
     for(int i = 0; i < p.size(); i+=3)
     {
+        // Save the profil name
         this->_profilsName << p.at(i);
+        // Create and save profil in profiles vector
         this->_profils.push_back(make_unique<code_compressor::Profil>( * new code_compressor::Profil(p.at(i+1), p.at(i+2) , p.at(i))));
         retval = true;
     }
@@ -168,8 +175,11 @@ void code_compressor::CodesCompressor::saveProfil(const QString &cfgName)
  */
 void code_compressor::CodesCompressor::deleteProfilByIndex(const int &index)
 {
+    // First, remove profil from profils list and profilsName list by it index
     this->_profils.erase(this->_profils.begin() + index);
     this->_profilsName.removeAt(index);
+
+    // Second, rewrite profil.txt file 
     QStringList ctn;
     for(int i = 0; i < (int)(this->_profils.size()) ; i++){
         ctn << this->_profils[i]->getCfgName() << this->_profils[i]->fileName();
@@ -184,8 +194,11 @@ void code_compressor::CodesCompressor::deleteProfilByIndex(const int &index)
  */
 void code_compressor::CodesCompressor::renameProfilByIndex(const int &index, const QString &newName)
 {
+    // First, rename profil in profils list and profilsName list by it index
     this->_profils[index]->setCfgName(newName);
     this->_profilsName.replace(index, newName);
+
+    // Second, rewrite profil.txt file 
     QStringList ctn;
     for(int i = 0; i < (int)(this->_profils.size()) ; i++){
         ctn << this->_profils[i]->getCfgName() << this->_profils[i]->fileName();
@@ -226,6 +239,11 @@ void code_compressor::CodesCompressor::launchCompressorByIndex(const int &i)
     this->launchCompressor(this->_profils[i]->fileName());
 }
 
+/** 
+ * @brief  return profil info by index
+ * @param  &i: index
+ * @retval QStringList { Path to JS directory ; Path to CSS directory }
+ */
 QStringList code_compressor::CodesCompressor::getProfilInfoByIndex(const int &i)
 {
     return this->_profils.at(i)->fileName();
