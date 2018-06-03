@@ -30,6 +30,8 @@ image_compressor::ImageCompressor::ImageCompressor()
     this->_icoList << "*.ico";
 
     this->_extList = this->_rawList + this->_pngList + this->_tifList + this->_psdList + this->_bmpList + this->_gifList + this->_icoList;
+
+    this->count = 0;
 }
 
 image_compressor::ImageCompressor::~ImageCompressor()
@@ -56,7 +58,7 @@ bool image_compressor::ImageCompressor::canConvert(const QString &extension)
 bool static inList(const QString &filePath, const QStringList &list)
 {
     QString ext = filePath.split('.').last();
-    return !(list.filter(ext).isEmpty());
+    return !(list.filter(ext, Qt::CaseInsensitive).isEmpty());
 }
 
 /**
@@ -76,8 +78,9 @@ inline QString image_compressor::ImageCompressor::makeCmd(const QString &exe, co
     cmd_to_test << cmd << filePath << fileName;
     cmdCheck(&cmd_to_test);
 
-    cmdArg << "-i " + cmd_to_test.at(1) << "-q" << "--filename-mask=\"" + cmd_to_test.at(2) + ".%ext%\"" << "--jpg-quality=" + QString::number(quality);
-    return cmd + " " + cmdArg.join(' ');
+    cmdArg << "-i " + cmd_to_test.at(1) << "-q" << "--filename-mask=\"" + cmd_to_test.at(2) + ".%%ext%%\"" << "--jpg-quality=" + QString::number(quality);
+    qDebug() << cmd_to_test.at(0) + " " + cmdArg.join(' ');
+    return cmd_to_test.at(0) + " " + cmdArg.join(' ');
 }
 
 /** 
@@ -107,7 +110,7 @@ void image_compressor::ImageCompressor::convert(const QString &filePath , QStrin
     bool no_name = false;
     if(fileName.isEmpty())
     {
-        fileName = "%filename%";
+        fileName = "%%filename%%";
         no_name = true;
     }
 
@@ -125,6 +128,9 @@ void image_compressor::ImageCompressor::convert(const QString &filePath , QStrin
             // Struct : %path_to_input_directory% + / + %output_file_name% + .jpg
             fileName = getFilePath(filePath) + "/" + fileName + ".jpg";
         }
+        else {
+            fileName = filePath;
+        }
 
         this->_cmd = ExePath() + "convert.exe";
 
@@ -136,11 +142,10 @@ void image_compressor::ImageCompressor::convert(const QString &filePath , QStrin
         
         QStringList cmdArg;
         // Argument use by convert.exe 
-        cmdArg << "-strip" << "-interlace Plane" << "-quality " + QString::number(quality) + "%" << cmd_to_test.at(1) << cmd_to_test.at(2);
+        cmdArg << "-strip" << "-interlace Plane" << "-quality " + QString::number(quality) + "%%" << cmd_to_test.at(1) << cmd_to_test.at(2);
 
         // Build cmd / Sturct : %exe% + %cmd argument%
         this->_cmd = cmd_to_test.at(0) + " " + cmdArg.join(' ');
-
     } else if( inList(filePath, this->_rawList )) {
         this->_cmd = makeCmd("raw", filePath, fileName, quality);
     } else if( inList(filePath , this->_pngList )) {
@@ -157,9 +162,31 @@ void image_compressor::ImageCompressor::convert(const QString &filePath , QStrin
         this->_cmd = makeCmd("ico", filePath, fileName, quality);
     }
 
+    this->bat_name = ExePath() + "tmp/" + QString::number(this->count) + ".bat";
+    this->count += 1;
+
+    // Set bat's name
+    this->bat.setFileName(this->bat_name);
+
+    // Write cmd to compress png in bat file
+    if(!this->bat.open(QIODevice::WriteOnly) )
+       return;
+
+    this->bat.write(this->_cmd.toUtf8().constData());
+    this->bat.close();
+
     // Launch cmd
-    QProcess::startDetached(this->_cmd);
+    this->launch();
 
     // Clear cmd to avoid error
     this->_cmd = "";
+}
+
+void image_compressor::ImageCompressor::launch()
+{
+    QProcess p;
+    p.setWorkingDirectory(ExePath() + "tmp/");
+    p.start(bat_name);
+
+    p.waitForFinished();
 }

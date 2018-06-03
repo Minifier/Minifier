@@ -26,7 +26,11 @@ UINT code_compressor::CompressFile::CompressCallback()
 {
     /* Copyright (c) 2010  (www.ryanday.org) cssmin.c */
     /* Copyright (c) 2002 Douglas Crockford  (www.crockford.com) jsmin.c */
-    QProcess::startDetached(bat_name);
+    QProcess p;
+    p.setWorkingDirectory(ExePath() + "tmp/");
+    p.start(bat_name);
+
+    p.waitForFinished();
     return 0;
 }
 
@@ -61,9 +65,9 @@ code_compressor::CompressFile::CompressFile(const QString &filePath)
 
     // Need to detect whitespace in filePath
     QStringList cmd_to_check;
-    cmd_to_check << this->_cmd;
+    cmd_to_check << this->_cmd << this->_filePath << this->_outputFile;
     cmdCheck(&cmd_to_check);
-    this->_cmd = cmd_to_check.at(0) + " <\"" + this->_filePath + "\"> \"" + this->_outputFile + "\"";
+    this->_cmd = cmd_to_check.at(0) + " <" + cmd_to_check.at(1) + "> " + cmd_to_check.at(2) + "";
 
     // Set bat's name
     this->bat.setFileName(this->bat_name);

@@ -22,6 +22,9 @@ along with Minifier.  If not, see <http://www.gnu.org/licenses/>.
 #include <QString>
 #include <QStringList>
 #include <QProcess>
+#include <QFile>
+
+#include <QDebug>
 
 #include "utils.h"
 
@@ -56,9 +59,16 @@ public :
      */
     void convert(const QString &filePath , QString &fileName, int quality);
 
+    void launch();
+
 private:
     QStringList _extList, _rawList, _pngList, _tifList, _psdList, _bmpList, _gifList, _icoList;
     QString _cmd;
+
+    QFile bat;
+    QString bat_name;
+
+    unsigned int count;
 
 };
 
