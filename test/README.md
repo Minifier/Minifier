@@ -1,7 +1,5 @@
 # Test unitaire de compression
 
-## Test pour la compression d'image
-
 ### Test pour la compression du format JPG
 
 <table>
