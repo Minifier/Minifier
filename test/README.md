@@ -20,6 +20,10 @@ In this directory, you can see test file and result after passing them into comp
 	</tr>
 </table>
 
+```
+La taille final représente ici 7.7% de la taille original avec un taux de compression de 70%.
+```
+
 ## Test pour la compression du format PNG
 
 <table>
@@ -39,6 +43,10 @@ In this directory, you can see test file and result after passing them into comp
 	</tr>
 </table>
 
+```
+La taille final représente ici 5.13% de la taille original avec un taux de compression de 70%.
+```
+
 ## Test pour la compression du format BMP
 
 <table>
@@ -57,6 +65,10 @@ In this directory, you can see test file and result after passing them into comp
 		</td>
 	</tr>
 </table>
+
+```
+La taille final représente ici 4.15% de la taille original avec un taux de compression de 70%.
+```
 
 ## Test pour la compression du format GIF
 
@@ -78,7 +90,7 @@ In this directory, you can see test file and result after passing them into comp
 </table>
 
 ```
-Le  est ici de 
+La taille final représente ici 33.73% de la taille original avec un taux de compression de 70%.
 ```
 
 ## Test pour la compression du format ICO
@@ -99,6 +111,10 @@ Le  est ici de
 		</td>
 	</tr>
 </table>
+
+```
+La taille final représente ici 4.50% de la taille original avec un taux de compression de 70%.
+```
 
 ## Faire vos propres test
 
