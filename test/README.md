@@ -1,7 +1,8 @@
-# File test directory
+# Test unitaire de compression
 
-In this directory, you can see test file and result after passing them into compressor.
-## Test pour la compression du format JPG
+## Test pour la compression d'image
+
+### Test pour la compression du format JPG
 
 <table>
 	<tr>
@@ -24,7 +25,7 @@ In this directory, you can see test file and result after passing them into comp
 La taille final représente ici 7.7% de la taille original avec un taux de compression de 70%.
 ```
 
-## Test pour la compression du format PNG
+### Test pour la compression du format PNG
 
 <table>
 	<tr>
@@ -47,7 +48,7 @@ La taille final représente ici 7.7% de la taille original avec un taux de compr
 La taille final représente ici 5.13% de la taille original avec un taux de compression de 70%.
 ```
 
-## Test pour la compression du format BMP
+### Test pour la compression du format BMP
 
 <table>
 	<tr>
@@ -70,7 +71,7 @@ La taille final représente ici 5.13% de la taille original avec un taux de comp
 La taille final représente ici 4.15% de la taille original avec un taux de compression de 70%.
 ```
 
-## Test pour la compression du format GIF
+### Test pour la compression du format GIF
 
 <table>
 	<tr>
@@ -93,7 +94,7 @@ La taille final représente ici 4.15% de la taille original avec un taux de comp
 La taille final représente ici 33.73% de la taille original avec un taux de compression de 70%.
 ```
 
-## Test pour la compression du format ICO
+### Test pour la compression du format ICO
 
 <table>
 	<tr>
@@ -116,9 +117,9 @@ La taille final représente ici 33.73% de la taille original avec un taux de com
 La taille final représente ici 4.50% de la taille original avec un taux de compression de 70%.
 ```
 
-## Faire vos propres test
+### Faire vos propres test
 
-If you want to make your own test you can go throw the following list after link to download some picture.
+Pour faire vos propres test, voici une liste de lien vers des banques d'images de test.
 
 - png:  http://www.fileformat.info/format/png/sample/index.htm
 - bmp:  http://www.fileformat.info/format/bmp/sample/index.htm
