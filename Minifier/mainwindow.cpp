@@ -344,7 +344,7 @@ void MainWindow::on_actionStop_triggered()
 
 void MainWindow::on_loadImg_clicked()
 {
-    QString filter = "Fichiers images (*.png *.jpg *.bmp);;Fichiers png (*.png);;Fichiers tiff (*.tif *.tiff);;Fichiers psd (*.psd);;Fichiers bmp (*.bpm);;Fichiers gif (*.gif);;Fichiers ico (*.ico)";
+    QString filter = "Fichiers images (*.png *.jpg *.bmp);;Fichiers png (*.png);;Fichiers tiff (*.tif *.tiff);;Fichiers psd (*.psd);;Fichiers bmp (*.bmp);;Fichiers gif (*.gif);;Fichiers ico (*.ico)";
     this->img_path = QFileDialog::getOpenFileName(this, tr("Charger une image"), "C:\\" , filter);
 }
 
