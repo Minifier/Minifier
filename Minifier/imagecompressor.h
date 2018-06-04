@@ -62,7 +62,7 @@ public :
     void launch();
 
 private:
-    QStringList _extList, _rawList, _pngList, _tifList, _psdList, _bmpList, _gifList, _icoList;
+    QStringList _extList, _pngList, _tifList, _psdList, _bmpList, _gifList, _icoList;
     QString _cmd;
 
     QFile bat;

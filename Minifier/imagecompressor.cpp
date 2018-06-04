@@ -21,7 +21,6 @@ along with Minifier.  If not, see <http://www.gnu.org/licenses/>.
 image_compressor::ImageCompressor::ImageCompressor()
 {
     // List of extension available
-    this->_rawList << "*.3fr" << "*.ari" << "*.arw" << "*.srf" << "*.sr2" << "*.bay" << "*.crw" << "*.cr2" << "*.cap" << "*.iiq" << "*.eip" << "*.dcs" << "*.dcr" << "*.drf" << "*.k25" << "*.kdc" << "*.dng" << "*.erf" << "*.fff" << "*.mef" << "*.mos" << "*.mrw" << "*.nef" << "*.nrw" << "*.orf" << "*.ptx" << "*.pef" << "*.pxn" << "*.r3d" << "*.raf" << "*.raw" << "*.rw2" << "*.rwl" << "*.rwz" << "*.x3f";
     this->_pngList << "*.png";
     this->_tifList << "*.tif" << "*.tiff";
     this->_psdList << "*.psd";
@@ -29,7 +28,7 @@ image_compressor::ImageCompressor::ImageCompressor()
     this->_gifList << "*.gif";
     this->_icoList << "*.ico";
 
-    this->_extList = this->_rawList + this->_pngList + this->_tifList + this->_psdList + this->_bmpList + this->_gifList + this->_icoList;
+    this->_extList = this->_pngList + this->_tifList + this->_psdList + this->_bmpList + this->_gifList + this->_icoList;
 
     this->count = 0;
 }
@@ -146,8 +145,6 @@ void image_compressor::ImageCompressor::convert(const QString &filePath , QStrin
 
         // Build cmd / Sturct : %exe% + %cmd argument%
         this->_cmd = cmd_to_test.at(0) + " " + cmdArg.join(' ');
-    } else if( inList(filePath, this->_rawList )) {
-        this->_cmd = makeCmd("raw", filePath, fileName, quality);
     } else if( inList(filePath , this->_pngList )) {
         this->_cmd = makeCmd("png", filePath, fileName, quality);
     } else if( inList(filePath , this->_tifList )) {

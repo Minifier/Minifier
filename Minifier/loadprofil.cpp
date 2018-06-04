@@ -49,7 +49,7 @@ void LoadProfil::on_buttonBox_accepted()
 {
     if(this->selected == nullptr)
     {
-        QMessageBox::warning(this,"Selection d'une configuration","Aucune configuration n'a été chargée.");
+        QMessageBox::warning(this,"Sélection d'une configuration","La configuration n'a pas été chargée.");
     }else{
         for( int i = 0; i < this->compressor->_profilsName.size() ; i++)
         {

@@ -1,0 +1,388 @@
+/*******************************************************************
+Copyright (C) 2018 Oscar MARIE--TAILLEFER   <o5mariet@enib.fr>
+Copyright (C) 2018 Nils JEGOU-GERGAUD       <n5jegoug@enib.fr>
+Copyright (C) 2018 Nicols FRANCIS           <n4franci@enib.fr>
+Copyright (C) 2018 Corentin LAMBERT         <c4lamber@enib.fr>
+This file is part of Minifier.
+Minifier is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+Minifier is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+You should have received a copy of the GNU General Public License
+along with Minifier.  If not, see <http://www.gnu.org/licenses/>.
+*******************************************************************/
+
+/* line 5, /usr/lib/ruby/gems/2.3.0/gems/compass-1.0.3/vendor/bundle/ruby/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font: inherit;
+  font-size: 100%;
+  vertical-align: baseline;
+}
+
+/* line 22, /usr/lib/ruby/gems/2.3.0/gems/compass-1.0.3/vendor/bundle/ruby/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+html {
+  line-height: 1;
+}
+
+/* line 24, /usr/lib/ruby/gems/2.3.0/gems/compass-1.0.3/vendor/bundle/ruby/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+ol, ul {
+  list-style: none;
+}
+
+/* line 26, /usr/lib/ruby/gems/2.3.0/gems/compass-1.0.3/vendor/bundle/ruby/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/* line 28, /usr/lib/ruby/gems/2.3.0/gems/compass-1.0.3/vendor/bundle/ruby/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+caption, th, td {
+  text-align: left;
+  font-weight: normal;
+  vertical-align: middle;
+}
+
+/* line 30, /usr/lib/ruby/gems/2.3.0/gems/compass-1.0.3/vendor/bundle/ruby/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+q, blockquote {
+  quotes: none;
+}
+/* line 103, /usr/lib/ruby/gems/2.3.0/gems/compass-1.0.3/vendor/bundle/ruby/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+q:before, q:after, blockquote:before, blockquote:after {
+  content: "";
+  content: none;
+}
+
+/* line 32, /usr/lib/ruby/gems/2.3.0/gems/compass-1.0.3/vendor/bundle/ruby/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+a img {
+  border: none;
+}
+
+/* line 116, /usr/lib/ruby/gems/2.3.0/gems/compass-1.0.3/vendor/bundle/ruby/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+article, aside, details, figcaption, figure, footer, header, hgroup, main, menu, nav, section, summary {
+  display: block;
+}
+
+/* line 19, ../sass/discussions.scss */
+* {
+  font-size: 18px;
+}
+
+/* line 23, ../sass/discussions.scss */
+.right {
+  float: right;
+}
+
+/* line 27, ../sass/discussions.scss */
+.discussion {
+  display: table;
+  margin: auto;
+  -webkit-justify-content: space-between;
+  justify-content: space-between;
+}
+/* line 32, ../sass/discussions.scss */
+.discussion p {
+  display: block;
+  padding: 5px;
+}
+/* line 37, ../sass/discussions.scss */
+.discussion label {
+  display: block;
+}
+/* line 41, ../sass/discussions.scss */
+.discussion h1 {
+  display: block;
+  font-family: "Tangerine", cursive;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+  font-weight: bold;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  font-size: 50px;
+}
+/* line 53, ../sass/discussions.scss */
+.discussion h2 {
+  display: block;
+  font-family: "Tangerine", cursive;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+  font-weight: bold;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  font-size: 40px;
+}
+/* line 65, ../sass/discussions.scss */
+.discussion h3 {
+  display: block;
+  font-family: "Tangerine", cursive;
+  text-align: center;
+  font-weight: bold;
+  margin: 0;
+  padding: 0;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  font-size: 30px;
+}
+/* line 77, ../sass/discussions.scss */
+.discussion input[type=text] {
+  border: 1px solid #999;
+  margin: 10px;
+  padding: 5px;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
+}
+/* line 84, ../sass/discussions.scss */
+.discussion input[type=password] {
+  border: 1px solid #999;
+  margin: 10px;
+  padding: 5px;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
+}
+/* line 91, ../sass/discussions.scss */
+.discussion input[type=email] {
+  border: 1px solid #999;
+  margin: 10px;
+  padding: 5px;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
+}
+/* line 98, ../sass/discussions.scss */
+.discussion input[type=checkbox] {
+  margin: 0;
+  padding: 0;
+}
+/* line 103, ../sass/discussions.scss */
+.discussion textarea {
+  border: 1px solid #999;
+  margin: 10px;
+  padding: 5px;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
+  min-width: 230px;
+  max-width: 230px;
+  min-height: 300px;
+  max-height: 300px;
+}
+/* line 114, ../sass/discussions.scss */
+.discussion button {
+  border: 1px solid #999;
+  margin: 10px;
+  color: #DDD;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
+  background-color: #333;
+}
+/* line 122, ../sass/discussions.scss */
+.discussion table {
+  display: block;
+  width: 100%;
+}
+/* line 125, ../sass/discussions.scss */
+.discussion table tbody {
+  display: table;
+  width: 100%;
+}
+/* line 129, ../sass/discussions.scss */
+.discussion table tbody .head th {
+  background-color: #717171;
+  text-align: center;
+  font-size: 20px;
+  font-weight: bold;
+  padding: 10px;
+}
+/* line 137, ../sass/discussions.scss */
+.discussion table tbody tr:first-child {
+  cursor: default;
+}
+/* line 140, ../sass/discussions.scss */
+.discussion table tbody tr {
+  cursor: pointer;
+  padding: 10px;
+}
+/* line 143, ../sass/discussions.scss */
+.discussion table tbody tr td {
+  padding: 10px;
+  text-align: center;
+  font-size: 18px;
+}
+/* line 147, ../sass/discussions.scss */
+.discussion table tbody tr td a {
+  display: inline-block;
+  border-bottom: 1 px solid rgba 0, 0, 0, 0.2;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  background: #44413E;
+  text-decoration: none;
+  color: #FFF;
+  padding: 10px;
+  height: 40px;
+}
+/* line 157, ../sass/discussions.scss */
+.discussion table tbody tr td a:hover {
+  background: #4a6ba2;
+}
+/* line 162, ../sass/discussions.scss */
+.discussion table tbody tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+/* line 167, ../sass/discussions.scss */
+.discussion .form textarea {
+  min-height: 150px;
+  max-height: 150px;
+}
+/* line 171, ../sass/discussions.scss */
+.discussion .form button {
+  display: block;
+  width: 100px;
+  margin: auto;
+  margin-bottom: 10px;
+}
+/* line 179, ../sass/discussions.scss */
+.discussion .button {
+  display: block;
+  margin: auto;
+  width: 200px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  padding: 5px;
+  text-decoration: none;
+  color: inherit;
+  font-weight: bold;
+  background-color: #FFCC66;
+  text-align: center;
+  height: 30px;
+  border: 1px solid #999;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
+}
+/* line 196, ../sass/discussions.scss */
+.discussion .pres_discussion {
+  display: block;
+  background-color: #A7C1E4;
+  margin-bottom: 10px;
+  margin-top: 10px;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
+}
+/* line 202, ../sass/discussions.scss */
+.discussion .pres_discussion p {
+  font-size: 20px;
+}
+/* line 205, ../sass/discussions.scss */
+.discussion .pres_discussion .captache {
+  display: block;
+  text-align: right;
+}
+/* line 210, ../sass/discussions.scss */
+.discussion .commente {
+  display: block;
+  margin-bottom: 10px;
+  margin-top: 10px;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
+}
+/* line 215, ../sass/discussions.scss */
+.discussion .commente .msg {
+  padding: 10px;
+  font-size: 18px;
+}
+/* line 219, ../sass/discussions.scss */
+.discussion .commente .captache {
+  display: block;
+  text-align: right;
+}
+/* line 224, ../sass/discussions.scss */
+.discussion .commente:nth-child(odd) {
+  background-color: #352CCB;
+}
+/* line 227, ../sass/discussions.scss */
+.discussion .commente:nth-child(even) {
+  background-color: #ED9930;
+}
+/* line 231, ../sass/discussions.scss */
+.discussion .commente_new {
+  background-color: #A7C1E4;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  padding: 5px;
+}
+/* line 232, ../sass/discussions.scss */
+.discussion .commente_new label {
+  font-size: 20px;
+}
+/* line 236, ../sass/discussions.scss */
+.discussion .commente_new textarea {
+  min-height: 150px;
+}
+/* line 244, ../sass/discussions.scss */
+.discussion .commente_new button {
+  display: block;
+  width: 150px;
+  margin: auto;
+  margin-bottom: 10px;
+}
+
+@media screen and (min-width: 1280px) {
+  /* line 255, ../sass/discussions.scss */
+  .discussion {
+    width: 1000px;
+  }
+  /* line 257, ../sass/discussions.scss */
+  .discussion button {
+    width: 150px;
+  }
+
+  /* line 262, ../sass/discussions.scss */
+  .form input[type=text] {
+    width: 1000px;
+  }
+  /* line 265, ../sass/discussions.scss */
+  .form textarea {
+    min-width: 1000px;
+    max-width: 1000px;
+  }
+
+  /* line 271, ../sass/discussions.scss */
+  .commente_new textarea {
+    min-width: 965px;
+    max-width: 965px;
+  }
+}
+@media screen and (min-width: 800px) and (max-width: 1280px) {
+  /* line 279, ../sass/discussions.scss */
+  .discussion {
+    width: 750px;
+  }
+  /* line 281, ../sass/discussions.scss */
+  .discussion button {
+    width: 130px;
+  }
+
+  /* line 286, ../sass/discussions.scss */
+  .form input[type=text] {
+    width: 750px;
+  }
+  /* line 289, ../sass/discussions.scss */
+  .form textarea {
+    min-width: 750px;
+    max-width: 750px;
+  }
+
+  /* line 296, ../sass/discussions.scss */
+  .commente_new textarea {
+    min-width: 715px;
+    max-width: 715px;
+  }
+}

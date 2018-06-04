@@ -48,7 +48,7 @@ void ManageProfil::on_deleteBtn_clicked()
 {
     if(this->selected == nullptr)
     {
-        QMessageBox::warning(this,"Selection d'un profil.","Aucune profil n'a été selectionné.");
+        QMessageBox::warning(this,"Sélection d'un profil.","Le profil n'a pas été selectionné.");
     }else{
         for( int i = 0; i < this->compressor->_profilsName.size() ; i++)
         {
@@ -67,7 +67,7 @@ void ManageProfil::on_renameBtn_clicked()
 {
     if(this->selected == nullptr)
     {
-        QMessageBox::warning(this,"Selection d'un profil.","Aucune profil n'a été selectionné.");
+        QMessageBox::warning(this,"Sélection d'un profil.","Le profil n'a été selectionné.");
     }else{
         bool ok;
         QString text;

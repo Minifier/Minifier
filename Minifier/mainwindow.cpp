@@ -183,7 +183,7 @@ void MainWindow::closeEvent (QCloseEvent *event)
     if(this->isVisible() && this->codeCompressor->running()){
         event->ignore();
         QMessageBox::information(this, "Minifier" , tr("Le programme continue de compresser en tâches de fond.\n"
-                                                 "Vous pouvez le fermer dans la zone de notification"));
+                                                 "Vous pouvez le fermer dans la zone de notification."));
         this->hide();
         QCoreApplication::processEvents();
     }
@@ -206,7 +206,7 @@ void MainWindow::on_js_browser_clicked()
 void MainWindow::on_css_browser_clicked()
 {
     // Let user choose his css directory
-    this->css_folder = QFileDialog::getExistingDirectory(this, "Choix du dossier CSS", "C:\\")+ '/';
+    this->css_folder = QFileDialog::getExistingDirectory(this, "Choix du dossier CSS.", "C:\\")+ '/';
 
     // set css checkBox at selected
     this->css_selected = true;
@@ -226,25 +226,25 @@ void MainWindow::on_launchCode_clicked()
     QString emsg = " ";
     if( this->js_folder == " " && this->js_selected){
         error++;
-        emsg = "Veuillez selectionner un dossier JS.";
+        emsg = "Veuillez sélectionner un dossier JS.";
     }
     if( this->css_folder == " " && this->css_selected){
         error++;
-        emsg = "Veuillez selectionner un dossier CSS.";
+        emsg = "Veuillez sélectionner un dossier CSS.";
     }
     if(!this->css_selected && !this->js_selected )
     {
         error++;
-        emsg = "Veuillez selectionner un compresseur.";
+        emsg = "Veuillez sélectionner un compresseur.";
     }
 
     switch (error)
     {
         case 3:
-            QMessageBox::warning(this,"Remplissage invalide","Veuillez selectionner un compresseur.");
+            QMessageBox::warning(this,"Remplissage invalide","Veuillez sélectionner un compresseur.");
             break;
         case 2:
-            QMessageBox::warning(this,"Remplissage invalide","Veuillez selectionner un dossier CSS et JS.");
+            QMessageBox::warning(this,"Remplissage invalide","Veuillez sélectionner un dossier CSS et JS.");
             break;
         case 1:
             QMessageBox::warning(this,"Remplissage invalide",emsg);
@@ -328,7 +328,7 @@ void MainWindow::on_actionRun_triggered()
         ui->actionStop->setEnabled(true);
         this->_stop->setEnabled(true);
         this->_start->setEnabled(false);
-        QMessageBox::information(this,"Lancement du compresseur","Le compresseur est bien lancé. \nPour le stop, cliquez sur le bouton stop.");
+        QMessageBox::information(this,"Lancement du compresseur","Le compresseur est bien lancé. \nPour le stopper, cliquez sur le bouton stop.");
     }
 }
 
@@ -344,7 +344,7 @@ void MainWindow::on_actionStop_triggered()
 
 void MainWindow::on_loadImg_clicked()
 {
-    QString filter = "Fichiers images (*.png *.jpg *.bmp);;Fichiers raw (*.3fr *.arw *.srf *.sr2 *.bay *.crw *.cr2 *.cap *.iiq *.eip *.dcs *.dcr *.drf *.k25 *.kdc *.dng *.erf *.fff *.mef *.mos *.mrw *.nef *.nrw *.orf *.ptx *.pref *.pxn *.r3d *.raf *.raw *.rw2 *.rwl *.rwz *.x3f);;Fichiers png (*.png);;Fichiers tiff (*.tif *.tiff);;Fichiers psd (*.psd);;Fichiers bmp (*.bpm);;Fichiers gif (*.gif);;Fichiers ico (*.ico)";
+    QString filter = "Fichiers images (*.png *.jpg *.bmp);;Fichiers png (*.png);;Fichiers tiff (*.tif *.tiff);;Fichiers psd (*.psd);;Fichiers bmp (*.bpm);;Fichiers gif (*.gif);;Fichiers ico (*.ico)";
     this->img_path = QFileDialog::getOpenFileName(this, tr("Charger une image"), "C:\\" , filter);
 }
 
@@ -400,6 +400,6 @@ void MainWindow::on_launchImage_clicked()
     }
 
     this->imageCompressor->convert(this->img_path, fileName, ui->qualitySlider->value());
-    QMessageBox::information(this,"Compression d'image","L'image " + this->img_path.split('/').last() + " a été compressé.");
+    QMessageBox::information(this,"Compression d'image","L'image " + this->img_path.split('/').last() + " a été compressée.");
 
 }

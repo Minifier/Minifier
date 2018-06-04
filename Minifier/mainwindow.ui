@@ -335,7 +335,7 @@ color:#01293d;
 }</string>
             </property>
             <property name="text">
-             <string>Image :</string>
+             <string>Nom de l'image: </string>
             </property>
            </widget>
           </item>
@@ -354,7 +354,7 @@ border:0 solid #0b94d1;
 border-bottom: 2px solid #0b94d1;</string>
             </property>
             <property name="placeholderText">
-             <string>nom fichier transformer</string>
+             <string>Nom du fichier en sortie</string>
             </property>
            </widget>
           </item>
