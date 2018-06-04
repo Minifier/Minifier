@@ -2,7 +2,13 @@
 
 In this directory, you can see test file and result after passing them into compressor.
 
-![jpg_test](https://raw.githubusercontent.com/Minifier/Minifier/master/test/jpg_test.jpg =250x)
+<table>
+  <tr>
+    <td><img src="jpg_test.jpg" width="400" /></td>
+    <td><img src="jpg_result.jpg" width="400" /></td>
+  </tr>
+</table>
+
 
 If you want to make your own test you can go throw the following list after link to download some picture.
 
