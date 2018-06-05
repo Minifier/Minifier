@@ -32,7 +32,8 @@ SOURCES = \
     utils.cpp \
     loadprofil.cpp \
     manageprofil.cpp \
-    imagecompressor.cpp
+    imagecompressor.cpp \
+    compressimagesdialog.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -42,12 +43,14 @@ HEADERS += \
     utils.h \
     loadprofil.h \
     manageprofil.h \
-    imagecompressor.h
+    imagecompressor.h \
+    compressimagesdialog.h
 
 FORMS += \
         mainwindow.ui \
     loadprofil.ui \
-    manageprofil.ui
+    manageprofil.ui \
+    compressimagesdialog.ui
 
 RESOURCES += \
     pics.qrc
