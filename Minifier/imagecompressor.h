@@ -24,8 +24,6 @@ along with Minifier.  If not, see <http://www.gnu.org/licenses/>.
 #include <QProcess>
 #include <QFile>
 
-#include <QDebug>
-
 #include "utils.h"
 
 namespace image_compressor{
@@ -49,7 +47,16 @@ public :
      */
     bool canConvert(const QString &extension);
 
+    /**
+     * @brief makeCmd Build a cmd
+     * @param exe extension for launch .exe ( for exemple jpg => jpg2png.exe)
+     * @param filePath filepath
+     * @param fileName output fileName
+     * @param quality quality level
+     * @return cmd built
+     */
     inline QString makeCmd(const QString &exe, const QString &filePath, const QString &fileName, const int &quality);
+    inline QString makeCmd(const QString &exe, const QString &filePath, const int &quality);
 
     /**
      * @brief convert algo to create and launch convertissor and compressor
@@ -58,6 +65,7 @@ public :
      * @param quality [0-100] % quality for compression (default 70)
      */
     void convert(const QString &filePath , QString &fileName, int quality);
+    void convert(const QString &filePath, int quality);
 
     void launch();
 

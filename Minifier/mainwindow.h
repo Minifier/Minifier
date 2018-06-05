@@ -32,12 +32,14 @@ along with Minifier.  If not, see <http://www.gnu.org/licenses/>.
 #include <QMenu>
 #include <QCloseEvent>
 #include <QProcess>
+#include <QStringList>
 
 #include "codescompressor.h"
 #include "imagecompressor.h"
 
 #include "loadprofil.h"
 #include "manageprofil.h"
+#include "compressimagesdialog.h"
 
 #include "utils.h"
 
@@ -97,12 +99,6 @@ private slots:
 
     void on_actionStop_triggered();
 
-    void on_loadImg_clicked();
-
-    void on_qualitySlider_valueChanged(int value);
-
-    void on_qualtiySpinBox_valueChanged(int arg1);
-
 protected:
     /* Virtual function of the parent class in our class
      * Overridden to change the behavior of the application,
@@ -116,15 +112,34 @@ private slots:
      */
     void iconActivated(QSystemTrayIcon::ActivationReason reason);
 
+    void on_loadImg_clicked();
+
+    void on_qualitySlider_valueChanged(int value);
+
+    void on_qualtiySpinBox_valueChanged(int arg1);
+
     void on_launchImage_clicked();
+
+    void on_selecte_output_folder_imgs_clicked();
+
+    void on_output_def_imgs_stateChanged(int arg1);
+
+    void on_ui_load_picture_clicked();
+
+    void on_ui_quality_slider_valueChanged(int value);
+
+    void on_ui_qualtiy_spinBox_valueChanged(int arg1);
+
+    void on_ui_launch_clicked();
 
 private:
     Ui::MainWindow *ui;
     LoadProfil p;
     ManageProfil m;
 
-    QString css_folder, js_folder, img_path;
-    bool css_selected, js_selected;
+    QString css_folder, js_folder, output_img_folder , ui_filepath;
+    QStringList img_path;
+    bool css_selected, js_selected, output_img, lock_size;
 
 
     QSystemTrayIcon * _sysTray;
@@ -132,7 +147,6 @@ private:
     QAction * _start, * _stop, * _exit, * _open;
 
     code_compressor::CodesCompressor * codeCompressor;
-    image_compressor::ImageCompressor * imageCompressor;
 };
 
 #endif // MAINWINDOW_H

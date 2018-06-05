@@ -27,10 +27,17 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_3">
    <item>
-    <widget class="QListWidget" name="listProfils"/>
+    <widget class="QListWidget" name="listProfils">
+     <property name="styleSheet">
+      <string notr="true">font: 16px &quot;MS Shell Dlg 2&quot;;</string>
+     </property>
+    </widget>
    </item>
    <item>
     <widget class="QDialogButtonBox" name="buttonBox">
+     <property name="styleSheet">
+      <string notr="true">font: 16px &quot;MS Shell Dlg 2&quot;;</string>
+     </property>
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
      </property>

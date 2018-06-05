@@ -15,7 +15,6 @@ MainWindow::MainWindow(QWidget *parent) :
 
     // Create an empty codes compressor manager
     this->codeCompressor = new code_compressor::CodesCompressor();
-    this->imageCompressor = new image_compressor::ImageCompressor();
 
     // Set link to the compressor for manageProfil (m) and loadProfil (p) ui
     p.setCompressor(this->codeCompressor);
@@ -41,6 +40,10 @@ MainWindow::~MainWindow()
         return;
     }
 }
+
+/*************************************************************************/
+/************************* Code processing *******************************/
+/*************************************************************************/
 
 /**
  * @brief launchCodeCompressorlaunch code compressor
@@ -113,6 +116,181 @@ void MainWindow::setConfigInfo(const QStringList &info)
 
     QMessageBox::information(this,"Chargement du profil","Le profil a bien été chargé.");
 }
+
+void MainWindow::on_js_browser_clicked()
+{
+    // Let user choose his js directory
+    this->js_folder = QFileDialog::getExistingDirectory(this, "Choix du dossier JS", "C:\\") + '/';
+
+    if(this->js_folder != "/")
+    {
+        // set js checkBox at selected
+        this->js_selected = true;
+        ui->jsCheck->setCheckState(Qt::Checked);
+        ui->jsPath->setText(this->js_folder);
+
+        // Change js_browser style to notify that a directory is set
+        ui->js_browser->setStyleSheet("background-color: #0b94d1;border: none;");
+    }
+}
+
+void MainWindow::on_css_browser_clicked()
+{
+    // Let user choose his css directory
+    this->css_folder = QFileDialog::getExistingDirectory(this, "Choix du dossier CSS.", "C:\\")+ '/';
+
+    if(this->css_folder != "/")
+    {
+        // set css checkBox at selected
+        this->css_selected = true;
+        ui->cssCheck->setCheckState(Qt::Checked);
+        ui->cssPath->setText(this->css_folder);
+
+        // Change css_browser style to notify that a directory is set
+        ui->css_browser->setStyleSheet("background-color: #0b94d1;border: none;");
+    }
+}
+
+/**
+ * @brief MainWindow::on_launchCode_clicked launch compressor after check on users'inputs
+ */
+void MainWindow::on_launchCode_clicked()
+{
+    int error = 0;
+    QString emsg = " ";
+    if( this->js_folder == " " && this->js_selected){
+        error++;
+        emsg = "Veuillez sélectionner un dossier JS.";
+    }
+    if( this->css_folder == " " && this->css_selected){
+        error++;
+        emsg = "Veuillez sélectionner un dossier CSS.";
+    }
+    if(!this->css_selected && !this->js_selected )
+    {
+        error++;
+        emsg = "Veuillez sélectionner un compresseur.";
+    }
+
+    switch (error)
+    {
+        case 3:
+            QMessageBox::warning(this,"Remplissage invalide","Veuillez sélectionner un compresseur.");
+            break;
+        case 2:
+            QMessageBox::warning(this,"Remplissage invalide","Veuillez sélectionner un dossier CSS et JS.");
+            break;
+        case 1:
+            QMessageBox::warning(this,"Remplissage invalide",emsg);
+            break;
+        case 0:
+            this->launchCodeCompressor();
+            break;
+        default:
+            break;
+    }
+}
+
+void MainWindow::on_jsCheck_stateChanged(int arg1)
+{
+    if(arg1 == Qt::Checked){
+        this->js_selected = true;
+    }else{
+        this->js_selected = false;
+        ui->js_browser->setStyleSheet("border: 2px solid #0b94d1;background-color: #0b94d1;border-radius:20px;color: white;");
+        ui->jsPath->setText("");
+    }
+}
+
+void MainWindow::on_cssCheck_stateChanged(int arg1)
+{
+    if(arg1 == Qt::Checked){
+        this->css_selected = true;
+    }else{
+        this->css_selected = false;
+        ui->css_browser->setStyleSheet("border: 2px solid #0b94d1;background-color: #0b94d1;border-radius:20px;color: white;");
+        ui->cssPath->setText("");
+    }
+}
+
+/*************************************************************************/
+/*********************** End Code processing *****************************/
+/*************************************************************************/
+
+/*************************************************************************/
+/***************************** Config ************************************/
+/*************************************************************************/
+
+void MainWindow::on_create_config_triggered()
+{
+    if(this->codeCompressor->_profil == nullptr){
+        QMessageBox::warning(this,"Erreur","Veuillez lancer le compresseur avant de sauvegarder sa configuration.");
+    }else{
+        bool ok;
+        QString text;
+        do{
+            text = QInputDialog::getText(this, "Sauvegarde d'une configuration." , "Entrer un nom pour sauvegarder la configuration:" , QLineEdit::Normal,QDir::home().dirName(), &ok);
+            if(!ok){
+                return;
+            }
+            if(this->codeCompressor->checkExist(text))
+            {
+                ok = true;
+                QMessageBox::warning(this,"Nom de configuration","Ce nom de configuration est déjà utilisé.");
+            }else{
+                ok = false;
+            }
+        }
+        while(text.isEmpty() || ok);
+        this->codeCompressor->saveProfil(text);
+        QMessageBox::information(this,"Sauvegarde du profil","Le profil a bien été sauvegardé.");
+    }
+}
+
+void MainWindow::on_load_config_triggered()
+{
+    // Refresh profils list and show
+    p.setProfils();
+    p.show();
+}
+
+void MainWindow::on_manage_config_triggered()
+{
+    // Refresh profils list and show
+    m.setProfils();
+    m.show();
+}
+
+void MainWindow::on_actionRun_triggered()
+{
+    if(this->codeCompressor->_profil == nullptr){
+        QMessageBox::warning(this,"Erreur","Aucune configuration n'a pas été chargée.");
+    }else{
+        this->codeCompressor->compress();
+        ui->actionStop->setEnabled(true);
+        this->_stop->setEnabled(true);
+        this->_start->setEnabled(false);
+        QMessageBox::information(this,"Lancement du compresseur","Le compresseur est bien lancé. \nPour le stopper, cliquez sur le bouton stop.");
+    }
+}
+
+void MainWindow::on_actionStop_triggered()
+{
+    this->codeCompressor->stop();
+    ui->actionStop->setEnabled(false);
+    ui->actionRun->setEnabled(true);
+    this->_stop->setEnabled(false);
+    this->_start->setEnabled(true);
+    QMessageBox::information(this,"Arrêt du compresseur","Le compresseur est bien stoppé. \nPour le relancer, cliquez sur le bouton run.");
+}
+
+/*************************************************************************/
+/*************************** End Config **********************************/
+/*************************************************************************/
+
+/*************************************************************************/
+/*************************** System Tray *********************************/
+/*************************************************************************/
 
 /**
  * @brief setupSystemTray setup system tray for windows
@@ -189,175 +367,6 @@ void MainWindow::closeEvent (QCloseEvent *event)
     }
 }
 
-void MainWindow::on_js_browser_clicked()
-{
-    // Let user choose his js directory
-    this->js_folder = QFileDialog::getExistingDirectory(this, "Choix du dossier JS", "C:\\") + '/';
-
-    // set js checkBox at selected
-    this->js_selected = true;
-    ui->jsCheck->setCheckState(Qt::Checked);
-    ui->jsPath->setText(this->js_folder);
-
-    // Change js_browser style to notify that a directory is set
-    ui->js_browser->setStyleSheet("background-color: #0b94d1;border: none;");
-}
-
-void MainWindow::on_css_browser_clicked()
-{
-    // Let user choose his css directory
-    this->css_folder = QFileDialog::getExistingDirectory(this, "Choix du dossier CSS.", "C:\\")+ '/';
-
-    // set css checkBox at selected
-    this->css_selected = true;
-    ui->cssCheck->setCheckState(Qt::Checked);
-    ui->cssPath->setText(this->css_folder);
-
-    // Change css_browser style to notify that a directory is set
-    ui->css_browser->setStyleSheet("background-color: #0b94d1;border: none;");
-}
-
-/**
- * @brief MainWindow::on_launchCode_clicked launch compressor after check on users'inputs
- */
-void MainWindow::on_launchCode_clicked()
-{
-    int error = 0;
-    QString emsg = " ";
-    if( this->js_folder == " " && this->js_selected){
-        error++;
-        emsg = "Veuillez sélectionner un dossier JS.";
-    }
-    if( this->css_folder == " " && this->css_selected){
-        error++;
-        emsg = "Veuillez sélectionner un dossier CSS.";
-    }
-    if(!this->css_selected && !this->js_selected )
-    {
-        error++;
-        emsg = "Veuillez sélectionner un compresseur.";
-    }
-
-    switch (error)
-    {
-        case 3:
-            QMessageBox::warning(this,"Remplissage invalide","Veuillez sélectionner un compresseur.");
-            break;
-        case 2:
-            QMessageBox::warning(this,"Remplissage invalide","Veuillez sélectionner un dossier CSS et JS.");
-            break;
-        case 1:
-            QMessageBox::warning(this,"Remplissage invalide",emsg);
-            break;
-        case 0:
-            this->launchCodeCompressor();
-            break;
-        default:
-            break;
-    }
-}
-
-void MainWindow::on_jsCheck_stateChanged(int arg1)
-{
-    if(arg1 == Qt::Checked){
-        this->js_selected = true;
-    }else{
-        this->js_selected = false;
-        ui->js_browser->setStyleSheet("background-color:#fff;border:0 solid #0b94d1;border-bottom: 2px solid #0b94d1;");
-        ui->jsPath->setText("");
-    }
-}
-
-void MainWindow::on_cssCheck_stateChanged(int arg1)
-{
-    if(arg1 == Qt::Checked){
-        this->css_selected = true;
-    }else{
-        this->css_selected = false;
-        ui->css_browser->setStyleSheet("background-color:#fff;border:0 solid #0b94d1;border-bottom: 2px solid #0b94d1;");
-        ui->cssPath->setText("");
-    }
-}
-
-void MainWindow::on_create_config_triggered()
-{
-    if(this->codeCompressor->_profil == nullptr){
-        QMessageBox::warning(this,"Erreur","Veuillez lancer le compresseur avant de sauvegarder sa configuration.");
-    }else{
-        bool ok;
-        QString text;
-        do{
-            text = QInputDialog::getText(this, "Sauvegarde d'une configuration." , "Entrer un nom pour sauvegarder la configuration:" , QLineEdit::Normal,QDir::home().dirName(), &ok);
-            if(!ok){
-                return;
-            }
-            if(this->codeCompressor->checkExist(text))
-            {
-                ok = true;
-                QMessageBox::warning(this,"Nom de configuration","Ce nom de configuration est déjà utilisé.");
-            }else{
-                ok = false;
-            }
-        }
-        while(text.isEmpty() || ok);
-        this->codeCompressor->saveProfil(text);
-        QMessageBox::information(this,"Sauvegarde du profil","Le profil a bien été sauvegardé.");
-    }
-}
-
-void MainWindow::on_load_config_triggered()
-{
-    // Refresh profils list and show
-    p.setProfils();
-    p.show();
-}
-
-void MainWindow::on_manage_config_triggered()
-{
-    // Refresh profils list and show
-    m.setProfils();
-    m.show();
-}
-
-void MainWindow::on_actionRun_triggered()
-{
-    if(this->codeCompressor->_profil == nullptr){
-        QMessageBox::warning(this,"Erreur","Aucune configuration n'a pas été chargée.");
-    }else{
-        this->codeCompressor->compress();
-        ui->actionStop->setEnabled(true);
-        this->_stop->setEnabled(true);
-        this->_start->setEnabled(false);
-        QMessageBox::information(this,"Lancement du compresseur","Le compresseur est bien lancé. \nPour le stopper, cliquez sur le bouton stop.");
-    }
-}
-
-void MainWindow::on_actionStop_triggered()
-{
-    this->codeCompressor->stop();
-    ui->actionStop->setEnabled(false);
-    ui->actionRun->setEnabled(true);
-    this->_stop->setEnabled(false);
-    this->_start->setEnabled(true);
-    QMessageBox::information(this,"Arrêt du compresseur","Le compresseur est bien stoppé. \nPour le relancer, cliquez sur le bouton run.");
-}
-
-void MainWindow::on_loadImg_clicked()
-{
-    QString filter = "Fichiers images (*.png *.jpg *.bmp);;Fichiers png (*.png);;Fichiers tiff (*.tif *.tiff);;Fichiers psd (*.psd);;Fichiers bmp (*.bmp);;Fichiers gif (*.gif);;Fichiers ico (*.ico)";
-    this->img_path = QFileDialog::getOpenFileName(this, tr("Charger une image"), "C:\\" , filter);
-}
-
-void MainWindow::on_qualitySlider_valueChanged(int value)
-{
-    ui->qualtiySpinBox->setValue(value);
-}
-
-void MainWindow::on_qualtiySpinBox_valueChanged(int arg1)
-{
-    ui->qualitySlider->setValue(arg1);
-}
-
 void MainWindow::iconActivated(QSystemTrayIcon::ActivationReason reason)
 {
     switch (reason){
@@ -373,33 +382,132 @@ void MainWindow::iconActivated(QSystemTrayIcon::ActivationReason reason)
     }
 }
 
+/*************************************************************************/
+/************************** End System Tray ******************************/
+/*************************************************************************/
+
+/*************************************************************************/
+/************************* Image processing ******************************/
+/*************************************************************************/
+
+void MainWindow::on_loadImg_clicked()
+{
+    QString filter = "Fichiers images (*.png *.jpg *.bmp);;Fichiers png (*.png);;Fichiers tiff (*.tif *.tiff);;Fichiers psd (*.psd);;Fichiers bmp (*.bmp);;Fichiers gif (*.gif);;Fichiers ico (*.ico)";
+    this->img_path = QFileDialog::getOpenFileNames(this, tr("Sélectionner une ou plusieurs images à compresser"), "C:\\" , filter);
+}
+
+void MainWindow::on_qualitySlider_valueChanged(int value)
+{
+    ui->qualtiySpinBox->setValue(value);
+}
+
+void MainWindow::on_qualtiySpinBox_valueChanged(int arg1)
+{
+    ui->qualitySlider->setValue(arg1);
+}
+
 void MainWindow::on_launchImage_clicked()
 {
-    // Get fileName
-    QString fileName = ui->fileName->text().simplified();
-
-
-    QRegExp re_1("jpeg", Qt::CaseInsensitive);
-    QRegExp re_2("jpg", Qt::CaseInsensitive);
-    re_1.setPatternSyntax(QRegExp::Wildcard);
-    re_2.setPatternSyntax(QRegExp::Wildcard);
-    // Kill extension if user enter ".jpg"
-    QStringList c = fileName.split('.');
-    while(re_1.exactMatch(c.last()) or re_2.exactMatch(c.last()))
+    if(this->img_path.empty())
     {
-        QStringList path;
-        int sl = c.size();
-        if (sl != 1) {
-            path.clear();
-            for (int i = 0; i < sl - 1; i++) {
-                path << c.at(i);
-            }
-            fileName = path.join('.');
-        }
-        c = fileName.split('.');
+        QMessageBox::warning(this,"Erreur","Vous n'avez pas sélectionné vos fichiers à compresser.");
+        return;
     }
 
-    this->imageCompressor->convert(this->img_path, fileName, ui->qualitySlider->value());
-    QMessageBox::information(this,"Compression d'image","L'image " + this->img_path.split('/').last() + " a été compressée.");
+    CompressImagesDialog * p = new CompressImagesDialog( NULL);
+    p->show();
+    this->hide();
+    if(this->output_img == true)
+        p->run(&this->img_path, this->output_img_folder, ui->qualitySlider->value());
+    else
+        p->run(&this->img_path, ui->qualitySlider->value());
+    p->~CompressImagesDialog();
+    this->show();
+}
 
+void MainWindow::on_selecte_output_folder_imgs_clicked()
+{
+    // Let user choose his output directory for img compression
+    this->output_img_folder = QFileDialog::getExistingDirectory(this, "Choix du dossier de destination des images compressées.", "C:\\")+ '/';
+
+    if(this->output_img_folder != "/")
+    {
+        this->output_img = true;
+
+        ui->output_def_imgs->setCheckState(Qt::Checked);
+        ui->output_fp_imgs_label->setText(this->output_img_folder);
+        ui->selecte_output_folder_imgs->setStyleSheet("background-color: #0b94d1;border: none;");
+    }
+}
+
+void MainWindow::on_output_def_imgs_stateChanged(int arg1)
+{
+    if(arg1 == Qt::Checked){
+        this->output_img = true;
+    }else{
+        this->output_img = false;
+        ui->selecte_output_folder_imgs->setStyleSheet("border: 2px solid #0b94d1;background-color: #0b94d1;border-radius:20px;color: white;");
+        ui->output_fp_imgs_label->setText("");
+    }
+}
+
+/*************************************************************************/
+/************************ End Image processing ***************************/
+/*************************************************************************/
+
+void MainWindow::on_ui_load_picture_clicked()
+{
+    QString filter = "Fichiers images (*.png *.jpg *.bmp);;Fichiers png (*.png);;Fichiers tiff (*.tif *.tiff);;Fichiers psd (*.psd);;Fichiers bmp (*.bmp);;Fichiers gif (*.gif);;Fichiers ico (*.ico)";
+    this->ui_filepath = QFileDialog::getOpenFileName(this, tr("Sélectionner une image") , "C:\\" , filter );
+}
+
+void MainWindow::on_ui_quality_slider_valueChanged(int value)
+{
+    ui->ui_qualtiy_spinBox->setValue(value);
+}
+
+void MainWindow::on_ui_qualtiy_spinBox_valueChanged(int arg1)
+{
+    ui->ui_quality_slider->setValue(arg1);
+}
+
+void MainWindow::on_ui_launch_clicked()
+{
+    // Get fileName
+    QString fileName = ui->ui_img_name->text().simplified();
+
+    if(fileName != ""){
+        QRegExp re_1("jpeg", Qt::CaseInsensitive);
+        QRegExp re_2("jpg", Qt::CaseInsensitive);
+        re_1.setPatternSyntax(QRegExp::Wildcard);
+        re_2.setPatternSyntax(QRegExp::Wildcard);
+        // Kill extension if user enter ".jpg"
+        QStringList c = fileName.split('.');
+        while(re_1.exactMatch(c.last()) or re_2.exactMatch(c.last()))
+        {
+            QStringList path;
+            int sl = c.size();
+            if (sl != 1) {
+                path.clear();
+                for (int i = 0; i < sl - 1; i++) {
+                    path << c.at(i);
+                }
+                fileName = path.join('.');
+            }
+            c = fileName.split('.');
+        }
+        QStringList path = this->ui_filepath.split('/');
+        QStringList fp;
+        for(int i = 0; i < path.size()-1; i++)
+        {
+            fp << path.at(i);
+        }
+        fileName =  fp.join('/') + "/" + fileName + ".jpg";
+        image_compressor::ImageCompressor * imageCompressor = new image_compressor::ImageCompressor();
+        imageCompressor->convert(this->ui_filepath, fileName, ui->qualitySlider->value());
+    } else {
+        image_compressor::ImageCompressor * imageCompressor = new image_compressor::ImageCompressor();
+        imageCompressor->convert(this->ui_filepath, ui->qualitySlider->value());
+    }
+    QMessageBox::information(this,"Compression d'image","L'image " + this->ui_filepath.split('/').last() + " a été compressée.");
 }
